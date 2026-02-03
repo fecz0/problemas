@@ -7,7 +7,7 @@ linkedin: https://www.linkedin.com/in/ferenc-mile-65038446
 bluesky: https://bsky.app/profile/fecz0.bsky.social
 ---
 
-# Hogyan szüntessük meg a „receptgyárat”?
+## Hogyan szüntessük meg a „receptgyárat"?
 
 A háziorvosi rendelőkben zajló munka jelentős része nem diagnosztika, hanem tiszta adminisztráció. A leggyakoribb ilyen feladat a stabil állapotú, krónikus betegek gyógyszereinek havi vagy negyedéves újraírása. Ez a folyamat jelenleg manuális, repetitív és feleslegesen terheli a rendszert.
 

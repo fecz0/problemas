@@ -9,6 +9,27 @@ const { data: problems } = await useAsyncData('problems', () => {
     .order('date', 'DESC')
     .all()
 })
+
+// SEO meta tags for home page
+useSeoMeta({
+  title: 'problemas.hu - Társadalmi problémák elemzése',
+  description: 'Komplex társadalmi és technológiai problémák elemzése fokozatos és megvalósítható lépésekben.',
+  ogTitle: 'problemas.hu - Problémák és működő megoldások',
+  ogDescription: 'Komplex társadalmi és technológiai problémák elemzése fokozatos és megvalósítható lépésekben.',
+  ogUrl: 'https://problemas.hu',
+  ogType: 'website',
+  ogLocale: 'hu_HU',
+  ogSiteName: 'problemas.hu',
+  twitterCard: 'summary_large_image',
+  twitterTitle: 'problemas.hu - Problémák és működő megoldások',
+  twitterDescription: 'Komplex társadalmi és technológiai problémák elemzése fokozatos és megvalósítható lépésekben.',
+})
+
+useHead({
+  link: [
+    { rel: 'canonical', href: 'https://problemas.hu' },
+  ],
+})
 </script>
 
 <template>

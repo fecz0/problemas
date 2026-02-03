@@ -8,15 +8,24 @@ const navigation = [
 
 <template>
   <UHeader title="problemas.hu" to="/">
+    <template #title>
+      <img src="/problemas-logo.png" alt="problemas.hu logo" class="h-6 w-auto" />
+      <span>problemas.hu</span>
+    </template>
+
+    <!-- Desktop navigation in default slot (center) - hidden on mobile -->
+    <UNavigationMenu :items="navigation" class="hidden lg:flex" />
+
     <template #right>
-      <UNavigationMenu :items="navigation" />
       <UColorModeButton />
     </template>
 
-    <template #content>
+    <!-- Mobile navigation menu (shown when hamburger is clicked) -->
+    <template #body>
       <UNavigationMenu
         :items="navigation"
         orientation="vertical"
+        class="-mx-2.5"
       />
     </template>
   </UHeader>
