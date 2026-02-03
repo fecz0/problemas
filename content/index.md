@@ -1,24 +1,16 @@
-# Welcome to Nuxt Content Starter
+---
+title: "Valami készülődik..."
+description: "Mély problémák, technológiai válaszok, apró lépések."
+---
 
-This is the main page displaying Markdown located at [content/index.md](https://github.com/nuxt/starter/blob/content/content/index.md).
+# Üdv a Problémás.hu-n!
 
-Move to [about](/about) page.
+Ez nem egy panaszfal. Ez egy digitális műhely, ahol komplex társadalmi és technológiai rendszereket szedünk ízekre, hogy kitaláljuk: **hogyan lehetne jobb?**
 
-## Manage your Contents
+### Miért nincs itt még semmi?
+Mert épp a mélyére ások az első témáknak (például a háziorvosi rendszer technológiai tehermentesítésének).
 
-Create new pages or modify the existing ones in `content/` directory.
-
-## Query & Render Pages
-
-You can find an example of querying contents and rendering them in a [catch-all page](https://github.com/nuxt/starter/blob/content/app/pages/%5B...slug%5D.vue)
-
-## Integrate Vue Component
-
-::alert{color="green"}
-The current [alert](https://github.com/nuxt/starter/blob/content/app/components/Alert.vue) and the [counter](https://github.com/nuxt/starter/blob/content/app/components/Counter.vue) below are `Vue` components integrated into the Markdown.
-::
-
-::counter
-::
-
-Checkout out the [documentation](https://content.nuxt.com/docs/getting-started) to learn more.
+**Iratkozz fel a gondolatmenetre:**
+Hamarosan indulunk az első elemzésekkel. Addig is kövess itt:
+- [LinkedIn](https://www.linkedin.com/in/ferenc-mile-65038446)
+- [Bluesky](https://bsky.app/profile/fecz0.bsky.social)
