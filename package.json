@@ -1,8 +1,15 @@
 {
   "name": "problemas",
+  "version": "1.0.0",
   "private": true,
   "type": "module",
   "license": "MIT",
+  "description": "Content-driven web application for analyzing complex societal problems with incremental solutions",
+  "author": "problemas.hu",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/fecz0/problemas"
+  },
   "scripts": {
     "build": "nuxt build",
     "dev": "nuxt dev",

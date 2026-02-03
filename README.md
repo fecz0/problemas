@@ -13,7 +13,7 @@ A content-driven web application for analyzing complex societal and technologica
 
 ## Prerequisites
 
-- Node.js 20.x or later
+- Node.js 24.x or later
 - [Bun](https://bun.sh/) (recommended) or npm/pnpm
 
 ## Installation
@@ -113,13 +113,7 @@ bunx eslint --fix .
 
 ## Deployment
 
-The build output is a fully static site in `.output/public/`, suitable for deployment to:
-
-- GitHub Pages
-- Netlify
-- Vercel
-- Cloudflare Pages
-- Any static file hosting
+The build output is a fully static site in `.output/public/`, deployed to GitHub Pages
 
 ## License
 
