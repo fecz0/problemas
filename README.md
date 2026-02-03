@@ -1,75 +1,126 @@
-# Nuxt Content Starter
+# problemas.hu
 
-Look at the [Nuxt Content documentation](https://content.nuxt.com) to learn more.
+A content-driven web application for analyzing complex societal and technological problems with incremental, practical solutions. Built with Nuxt 4 and designed for the Hungarian audience.
 
-## Setup
+## Tech Stack
 
-Make sure to install dependencies:
+- **Framework:** [Nuxt 4](https://nuxt.com/) with Vue 3
+- **Content:** [@nuxt/content](https://content.nuxt.com/) for markdown-based pages
+- **UI:** [@nuxt/ui](https://ui.nuxt.com/) v4 with Tailwind CSS 4
+- **Language:** TypeScript (strict mode)
+- **Testing:** Vitest (unit/integration) + Playwright (e2e)
+- **SEO:** @nuxtjs/sitemap, @nuxt/a11y for accessibility
+
+## Prerequisites
+
+- Node.js 20.x or later
+- [Bun](https://bun.sh/) (recommended) or npm/pnpm
+
+## Installation
 
 ```bash
-# npm
-npm install
-
-# pnpm
-pnpm install
-
-# yarn
-yarn install
-
-# bun
 bun install
 ```
 
-## Development Server
+## Development
 
 Start the development server on `http://localhost:3000`:
 
 ```bash
-# npm
-npm run dev
-
-# pnpm
-pnpm dev
-
-# yarn
-yarn dev
-
-# bun
 bun run dev
 ```
 
-## Production
+## Build
 
-Build the application for production:
+Build the application for production (static site generation):
 
 ```bash
-# npm
-npm run build
-
-# pnpm
-pnpm build
-
-# yarn
-yarn build
-
-# bun
 bun run build
 ```
 
-Locally preview production build:
+Preview the production build locally:
 
 ```bash
-# npm
-npm run preview
-
-# pnpm
-pnpm preview
-
-# yarn
-yarn preview
-
-# bun
 bun run preview
 ```
 
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+## Testing
+
+```bash
+# Run all tests
+bun run test
+
+# Run unit tests only
+bun run test:unit
+
+# Run Nuxt component tests only
+bun run test:nuxt
+
+# Run tests in watch mode
+bun run test:watch
+
+# Run tests with coverage report
+bun run test:coverage
+
+# Run Playwright e2e tests
+bun run test:e2e
+
+# Run e2e tests with Playwright UI
+bun run test:e2e:ui
+```
+
+## Project Structure
+
+```
+app/
+  components/       # Vue components
+  layouts/          # Page layouts
+  pages/            # Route pages
+  assets/css/       # Global styles
+  error.vue         # Error page
+  app.vue           # Root component
+content/            # Markdown content files
+  problemak/        # Problem analysis articles
+test/
+  unit/             # Unit tests (Node environment)
+  nuxt/             # Component tests (Nuxt environment)
+tests/              # Playwright e2e tests
+public/             # Static assets
+```
+
+## Content System
+
+Pages are driven by markdown files in the `content/` directory. Each article supports the following frontmatter:
+
+```yaml
+title: Article Title
+date: '2025-01-01'
+tldr: Short summary for readers
+status: Kutatas | Javaslat | Megvalositas
+linkedin: https://linkedin.com/...
+bluesky: https://bsky.app/...
+```
+
+## Linting
+
+```bash
+# Lint all files
+bunx eslint .
+
+# Lint and auto-fix
+bunx eslint --fix .
+```
+
+## Deployment
+
+The build output is a fully static site in `.output/public/`, suitable for deployment to:
+
+- GitHub Pages
+- Netlify
+- Vercel
+- Cloudflare Pages
+- Any static file hosting
+
+## License
+
+MIT License - see [LICENSE](LICENSE) for details.

@@ -25,11 +25,11 @@ Bár az EESZT és az e-recept már működik, a logikai modell maradt a régi: a
 
 ::incremental-steps
 
-::step{number="0" title="Jelenlegi állapot"}
+::step-item{number="0" title="Jelenlegi állapot"}
 A beteg havonta/negyedévente jelzi igényét. Az orvos vagy asszisztens manuálisan rögzíti ugyanazt az adatot az EESZT-be. Folyamatos telefoncsörgés, megszakított rendelési idő.
 ::
 
-::step{number="1" title="Ismétlődő eRecept keretrendszer"}
+::step-item{number="1" title="Ismétlődő eRecept keretrendszer"}
 A brit NHS (eRD) mintájára egy "keret-recept" bevezetése. Az orvos nem 1, hanem 12 havi adagot engedélyez egyszerre a felhőben, amit a beteg havonta hívhat le a patikában.
 
 **Konkrét intézkedések:**
@@ -38,7 +38,7 @@ A brit NHS (eRD) mintájára egy "keret-recept" bevezetése. Az orvos nem 1, han
 - Patikai rendszerek felkészítése a részleges, ütemezett lehívásra.
 ::
 
-::step{number="2" title="EgészségAblak integráció"}
+::step-item{number="2" title="EgészségAblak integráció"}
 A technológia aktív segítőtárssá válik. A beteg nem az utolsó szemnél kap észbe, hanem a rendszertől kap értesítést.
 
 **Konkrét intézkedések:**
@@ -47,7 +47,7 @@ A technológia aktív segítőtárssá válik. A beteg nem az utolsó szemnél k
 - Automatikus emlékeztető a keret lejárta előtti kötelező orvosi felülvizsgálatra.
 ::
 
-::step{number="3" title="AI döntéstámogatás"}
+::step-item{number="3" title="AI döntéstámogatás"}
 Az orvos tehermentesítése a rutinellenőrzés alól. A gép csak akkor riaszt, ha valódi kockázatot lát.
 
 **Konkrét intézkedések:**
@@ -56,7 +56,7 @@ Az orvos tehermentesítése a rutinellenőrzés alól. A gép csak akkor riaszt,
 - Adatvezérelt javaslat a keret megújítására a legfrissebb laboreredmények alapján.
 ::
 
-::step{number="4" title="Automatizált kiadás"}
+::step-item{number="4" title="Automatizált kiadás"}
 A fizikai hozzáférés egyszerűsítése ott is, ahol nincs patika vagy rendelési idő.
 
 **Konkrét intézkedések:**

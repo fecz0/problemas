@@ -77,7 +77,7 @@ useHead({
           v-for="problem in problems"
           :key="problem.path"
           :title="problem.title"
-          :description="problem.tldr"
+          :description="problem.tldr || ''"
           :to="problem.path"
           :status="problem.status"
         />

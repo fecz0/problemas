@@ -9,11 +9,11 @@ if (!page.value) {
   throw createError({ statusCode: 404, statusMessage: 'Page not found', fatal: true })
 }
 
-const statusColors = {
-  'Kutatás': 'amber',
-  'Javaslat': 'blue',
-  'Megvalósítás': 'green',
-} as const
+const statusColors: Record<'Kutatás' | 'Javaslat' | 'Megvalósítás', 'warning' | 'info' | 'success'> = {
+  'Kutatás': 'warning',
+  'Javaslat': 'info',
+  'Megvalósítás': 'success',
+}
 
 // Dynamic SEO meta tags
 const pageTitle = computed(() => page.value?.title ? `${page.value.title} | problemas.hu` : 'problemas.hu')

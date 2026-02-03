@@ -9,7 +9,7 @@ const navigation = [
 <template>
   <UHeader title="problemas.hu" to="/">
     <template #title>
-      <img src="/problemas-logo.png" alt="problemas.hu logo" class="h-6 w-auto" />
+      <img src="/problemas-logo.png" alt="problemas.hu logo" class="h-6 w-auto">
       <span>problemas.hu</span>
     </template>
 

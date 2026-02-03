@@ -6,11 +6,11 @@ defineProps<{
   status?: 'Kutatás' | 'Javaslat' | 'Megvalósítás'
 }>()
 
-const statusColors = {
-  'Kutatás': 'amber',
-  'Javaslat': 'blue',
-  'Megvalósítás': 'green',
-} as const
+const statusColors: Record<'Kutatás' | 'Javaslat' | 'Megvalósítás', 'warning' | 'info' | 'success'> = {
+  'Kutatás': 'warning',
+  'Javaslat': 'info',
+  'Megvalósítás': 'success',
+}
 </script>
 
 <template>
