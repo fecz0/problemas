@@ -20,7 +20,7 @@ export default defineNuxtConfig({
   ssr: true,
   nitro: {
     prerender: {
-      routes: ['/'],
+      routes: ['/', '/404.html'],
       crawlLinks: true,
       ignore: [
         '/.well-known/**',
@@ -36,6 +36,12 @@ export default defineNuxtConfig({
 
   site: {
     url: 'https://problemas.hu',
+  },
+
+  router: {
+    options: {
+      trailingSlash: true,
+    },
   },
 
   sitemap: {
