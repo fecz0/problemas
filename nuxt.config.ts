@@ -36,11 +36,14 @@ export default defineNuxtConfig({
 
   site: {
     url: 'https://problemas.hu',
+    trailingSlash: true,
   },
 
-  router: {
-    options: {
-      trailingSlash: true,
+  experimental: {
+    defaults: {
+      nuxtLink: {
+        trailingSlash: 'append',
+      },
     },
   },
 

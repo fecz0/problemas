@@ -1,8 +1,11 @@
 <script setup lang="ts">
 const route = useRoute()
 
-const { data: page } = await useAsyncData('page-' + route.path, () => {
-  return queryCollection('content').path(route.path).first()
+// Normalize path by removing trailing slash for content lookup
+const normalizedPath = computed(() => route.path.replace(/\/$/, '') || '/')
+
+const { data: page } = await useAsyncData('page-' + normalizedPath.value, () => {
+  return queryCollection('content').path(normalizedPath.value).first()
 })
 
 if (!page.value) {
@@ -18,7 +21,7 @@ const statusColors: Record<'Kutatás' | 'Javaslat' | 'Megvalósítás', 'warning
 // Dynamic SEO meta tags
 const pageTitle = computed(() => page.value?.title ? `${page.value.title} | problemas.hu` : 'problemas.hu')
 const pageDescription = computed(() => page.value?.tldr || 'Társadalmi problémák elemzése és fokozatos megoldási javaslatok')
-const pageUrl = computed(() => `https://problemas.hu${route.path}`)
+const pageUrl = computed(() => `https://problemas.hu${normalizedPath.value}`)
 
 useSeoMeta({
   title: pageTitle,

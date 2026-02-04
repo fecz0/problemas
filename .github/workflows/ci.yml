@@ -28,6 +28,9 @@ jobs:
       - name: Install dependencies
         run: bun install
 
+      - name: Prepare Nuxt
+        run: bunx nuxi prepare
+
       - name: Run ESLint
         run: bunx eslint .
 
@@ -49,6 +52,9 @@ jobs:
       - name: Install dependencies
         run: bun install
 
+      - name: Prepare Nuxt
+        run: bunx nuxi prepare
+
       - name: Run Vitest
         run: bun run test
 
@@ -66,6 +72,9 @@ jobs:
 
       - name: Install dependencies
         run: bun install
+
+      - name: Prepare Nuxt
+        run: bunx nuxi prepare
 
       - name: Install Playwright browsers
         run: bunx playwright install chromium --with-deps
