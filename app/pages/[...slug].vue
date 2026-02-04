@@ -21,7 +21,11 @@ const statusColors: Record<'Kutatás' | 'Javaslat' | 'Megvalósítás', 'warning
 // Dynamic SEO meta tags
 const pageTitle = computed(() => page.value?.title ? `${page.value.title} | problemas.hu` : 'problemas.hu')
 const pageDescription = computed(() => page.value?.tldr || 'Társadalmi problémák elemzése és fokozatos megoldási javaslatok')
-const pageUrl = computed(() => `https://problemas.hu${normalizedPath.value}`)
+// Canonical URL with trailing slash (matching site.trailingSlash: true)
+const pageUrl = computed(() => {
+  const path = normalizedPath.value
+  return `https://problemas.hu${path}${path === '/' ? '' : '/'}`
+})
 
 useSeoMeta({
   title: pageTitle,
