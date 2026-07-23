@@ -1,0 +1,58 @@
+version: 2
+updates:
+  # ─────────────────────────────────────────────
+  #  npm (pnpm) — package.json / pnpm-lock.yaml
+  # ─────────────────────────────────────────────
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "daily"          # Dependabot's "daily" = weekdays (Mon–Fri) only
+      time: "08:00"
+      timezone: "Europe/Budapest"
+    labels:
+      - "dependencies"
+      - "auto-update"
+      - "automated"
+    commit-message:
+      prefix: "chore"
+      include: "scope"
+    open-pull-requests-limit: 15
+    versioning-strategy: increase
+    pull-request-branch-name:
+      # Change the default separator (/) to a hyphen (-)
+      separator: "-"
+    # ── Groups (fixes cross-PR lockfile conflicts) ──
+    # One PR per group instead of one PR per dependency — removes the
+    # "PR1 merges, PR2 conflicts on package.json" race entirely for
+    # anything bundled together.
+    groups:
+      patch-and-minor:
+        update-types: ["minor", "patch"]
+      # Majors excluded from grouping on purpose — keep them as individual
+      # PRs so each gets its own review/auto-merge decision.
+    ignore:
+      - dependency-name: "@types/node"
+        update-types: ["version-update:semver-major"]
+    # ── Cooldown Period (2026) ───────────────────
+    # Prevents ingesting fresh releases immediately, mitigating supply-chain
+    # attacks. Security updates bypass these delays.
+    cooldown:
+      default-days: 7
+      semver-major-days: 14
+      semver-minor-days: 7
+      semver-patch-days: 3
+
+  # ─────────────────────────────────────────────
+  #  GitHub Actions — workflow YAML files
+  # ─────────────────────────────────────────────
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "daily"
+      time: "08:00"
+      timezone: "Europe/Budapest"
+    labels: ["dependencies", "github-actions", "automated"]
+    commit-message:
+      prefix: "chore"
+      include: "scope"
+    open-pull-requests-limit: 15

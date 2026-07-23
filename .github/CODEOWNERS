@@ -1,0 +1,6 @@
+# CODEOWNERS
+# Rules are evaluated top-to-bottom; the last matching rule wins.
+# Keep broad/default rules first and add any future team-specific overrides below.
+
+# Default owners for all repository content.
+* @fecz0
