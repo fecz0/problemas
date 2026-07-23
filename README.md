@@ -14,12 +14,12 @@ A content-driven web application for analyzing complex societal and technologica
 ## Prerequisites
 
 - Node.js 24.x or later
-- [Bun](https://bun.sh/) (recommended) or npm/pnpm
+- [pnpm](https://pnpm.io/)
 
 ## Installation
 
 ```bash
-bun install
+pnpm install
 ```
 
 ## Development
@@ -27,7 +27,7 @@ bun install
 Start the development server on `http://localhost:3000`:
 
 ```bash
-bun run dev
+pnpm dev
 ```
 
 ## Build
@@ -35,38 +35,38 @@ bun run dev
 Build the application for production (static site generation):
 
 ```bash
-bun run build
+pnpm build
 ```
 
 Preview the production build locally:
 
 ```bash
-bun run preview
+pnpm preview
 ```
 
 ## Testing
 
 ```bash
 # Run all tests
-bun run test
+pnpm test
 
 # Run unit tests only
-bun run test:unit
+pnpm test:unit
 
 # Run Nuxt component tests only
-bun run test:nuxt
+pnpm test:nuxt
 
 # Run tests in watch mode
-bun run test:watch
+pnpm test:watch
 
 # Run tests with coverage report
-bun run test:coverage
+pnpm test:coverage
 
 # Run Playwright e2e tests
-bun run test:e2e
+pnpm test:e2e
 
 # Run e2e tests with Playwright UI
-bun run test:e2e:ui
+pnpm test:e2e:ui
 ```
 
 ## Project Structure
@@ -105,10 +105,10 @@ bluesky: https://bsky.app/...
 
 ```bash
 # Lint all files
-bunx eslint .
+pnpm exec eslint .
 
 # Lint and auto-fix
-bunx eslint --fix .
+pnpm exec eslint --fix .
 ```
 
 ## Deployment

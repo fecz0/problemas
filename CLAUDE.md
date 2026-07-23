@@ -6,24 +6,24 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ```bash
 # Development
-bun run dev              # Start dev server on http://localhost:3000
+pnpm dev                 # Start dev server on http://localhost:3000
 
 # Build
-bun run build            # Build for production
-bun run preview          # Preview production build
+pnpm build                # Build for production
+pnpm preview               # Preview production build
 
 # Testing
-bun run test             # Run all tests
-bun run test:unit        # Run unit tests only (test/unit/*.{test,spec}.ts)
-bun run test:nuxt        # Run Nuxt component tests (test/nuxt/*.{test,spec}.ts)
-bun run test:watch       # Run tests in watch mode
-bun run test:coverage    # Run tests with coverage
-bun run test:e2e         # Run Playwright e2e tests (tests/ directory)
-bun run test:e2e:ui      # Run e2e tests with Playwright UI
+pnpm test                  # Run all tests
+pnpm test:unit             # Run unit tests only (test/unit/*.{test,spec}.ts)
+pnpm test:nuxt              # Run Nuxt component tests (test/nuxt/*.{test,spec}.ts)
+pnpm test:watch             # Run tests in watch mode
+pnpm test:coverage          # Run tests with coverage
+pnpm test:e2e               # Run Playwright e2e tests (tests/ directory)
+pnpm test:e2e:ui             # Run e2e tests with Playwright UI
 
 # Linting
-bunx eslint .            # Lint all files
-bunx eslint --fix .      # Lint and auto-fix
+pnpm exec eslint .          # Lint all files
+pnpm exec eslint --fix .    # Lint and auto-fix
 ```
 
 ## Architecture
