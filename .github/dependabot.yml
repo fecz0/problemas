@@ -33,6 +33,11 @@ updates:
     ignore:
       - dependency-name: "@types/node"
         update-types: ["version-update:semver-major"]
+        # typescript-eslint currently supports TypeScript versions below 6.1.
+        # Upgrade TypeScript alongside a compatible parser release.
+      - dependency-name: "typescript"
+        update-types: [ "version-update:semver-major", "version-update:semver-minor" ]
+
     # ── Cooldown Period (2026) ───────────────────
     # Prevents ingesting fresh releases immediately, mitigating supply-chain
     # attacks. Security updates bypass these delays.
