@@ -40,8 +40,8 @@
     "@vitest/coverage-v8": "^4.0.18",
     "@vue/test-utils": "^2.4.6",
     "better-sqlite3": "^13.0.3",
-    "eslint": "^10.8.0",
-    "happy-dom": "^20.11.1",
+    "eslint": "^10.8.1",
+    "happy-dom": "^20.11.2",
     "playwright-core": "^1.62.1",
     "vitest": "^4.0.18",
     "vue-tsc": "^3.3.9"
