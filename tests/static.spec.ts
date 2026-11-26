@@ -61,6 +61,21 @@ test.describe('Static HTML', () => {
     })
   }
 
+  test('contains the home page and profile text without JavaScript', async ({ page }) => {
+    await page.goto('/')
+    await expect(page.getByRole('heading', { level: 1, name: 'Mile Ferenc' })).toBeVisible()
+    await expect(page.getByText('Technológiai vezetőként rendszereket, termékeket és csapatokat építek.')).toBeVisible()
+    await expect(page.getByRole('heading', { name: 'Megérteni' })).toBeVisible()
+    expect((await graph(page)).find(node => node['@type'] === 'Person')).toMatchObject({
+      jobTitle: 'Head of Development',
+      knowsAbout: expect.arrayContaining(['Technológia', 'Engineering leadership']),
+    })
+
+    await page.goto('/rolam/')
+    await expect(page.getByRole('heading', { name: 'Szoftverfejlesztőként kezdtem' })).toBeVisible()
+    await expect(page.getByText('Head of Development')).toBeVisible()
+  })
+
   test('connects the profile and the analysis to the same person', async ({ page }) => {
     await page.goto('/rolam/')
     expect((await graph(page)).find(node => node['@type'] === 'ProfilePage')?.mainEntity).toEqual({ '@id': PERSON })
@@ -69,6 +84,7 @@ test.describe('Static HTML', () => {
     expect((await graph(page)).find(node => node['@type'] === 'Article')).toMatchObject({
       author: { '@id': PERSON },
       datePublished: '2025-02-03',
+      dateModified: '2026-11-26',
       headline: await page.getByRole('heading', { level: 1 }).innerText(),
     })
   })

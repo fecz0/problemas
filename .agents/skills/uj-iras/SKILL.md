@@ -16,15 +16,20 @@ The text is published under the author's own name. Write in Hungarian, keep the 
 
 ## 2a. External publication
 
-Add an item to `home.thoughts.publications` in `content/index.md`. The list renders in file order.
+Add an item to `home.thoughts.publications` in `content/index.md`. The home page merges these with the on-site analyses and sorts everything by `date`, newest first.
 
 ```yaml
 - title: A cím pontosan úgy, ahogy a forrásnál szerepel
   description: Egy-két mondat arról, mit vizsgál az írás.
   url: https://fecz0.substack.com/p/slug
+  date: 'YYYY-MM-DD'   # the publication date shown by the platform
+  platform: Substack
+  language: hu
+  topics:              # titles from home.topics.items
+    - Technológia
 ```
 
-Quote YAML values that contain a colon. Open the URL and check that it resolves and that the title matches.
+Quote YAML values that contain a colon. Open the URL and check that it resolves and that the title and date match. The Substack feed (`https://fecz0.substack.com/feed`) lists both.
 
 ## 2b. On-site analysis
 
@@ -34,6 +39,9 @@ Create `content/problemak/<ascii-slug>.md`. The route becomes `/problemak/<ascii
 ---
 title: Cím
 date: 'YYYY-MM-DD'
+updated: 'YYYY-MM-DD'    # only after a later correction; never change `date`
+topics:
+  - Közös rendszereink
 tldr: Egy-két mondatos összefoglaló. Ez lesz a meta leírás is.
 status: Kutatás   # Kutatás | Javaslat | Megvalósítás
 linkedin: https://www.linkedin.com/...   # only if a real post exists
@@ -41,7 +49,7 @@ bluesky: https://bsky.app/...            # only if a real post exists
 ---
 ```
 
-`content.config.ts` is the source of truth for the fields. The home page lists these files newest `date` first.
+`content.config.ts` is the source of truth for the fields.
 
 Optional step-by-step block:
 
@@ -55,6 +63,22 @@ Leírás.
 ::
 ```
 
+### Case study
+
+A professional case study is a page like any other, with these headings. Leave none empty, invent nothing, and name no employer or client. Don't add a menu item or an index page before a real case study exists.
+
+1. Kontextus
+2. Probléma
+3. Kiinduló állapot
+4. Korlátozások
+5. Saját szerep és felelősség
+6. Megközelítés
+7. Végrehajtott változtatások
+8. Mérhető eredmény
+9. Tanulságok
+
+Separate the team's results from the author's own contribution. The optional `caseStudy` frontmatter (`context`, `role`, `outcome`) renders a short summary after the text.
+
 ## 3. Check the claims
 
 The site's own principle (`content/szemleletem.md`): rely on data where it exists, and say so where it does not. For every number or factual claim, either link a source or mark it as an estimate. List unsupported claims to the author before publishing. Prefer a link to the specific document over a site's front page or category page.
@@ -64,9 +88,9 @@ The site's own principle (`content/szemleletem.md`): rely on data where it exist
 `tests/pages.spec.ts` hard-codes the current list:
 
 - the number of Substack publications (`toHaveCount`) and the test's name
-- the first link in the "Gondolatok" region, which is the newest on-site analysis
+- the first and last link in the "Írások" region (newest and oldest entry)
 
-Update them to match the new content.
+Update them to match the new content. A new page also belongs in the `pages` list of `tests/static.spec.ts`.
 
 ## 5. Verify
 

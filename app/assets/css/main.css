@@ -51,17 +51,31 @@
 }
 
 .editorial-hero {
-  padding-block: clamp(4rem, 11vw, 9rem);
+  padding-block: clamp(2.5rem, 7vw, 6rem);
 }
 
+/* The name is the strongest element of the page */
 .editorial-hero h1 {
-  max-width: 20ch;
-  margin-block: 1.25rem 1.75rem;
+  margin-bottom: 1.25rem;
   color: var(--ui-text-highlighted);
-  font-size: clamp(2.35rem, 7vw, 6rem);
+  font-size: clamp(4.25rem, 13vw, 10rem);
   font-weight: 700;
-  line-height: .99;
+  line-height: .92;
   letter-spacing: -.065em;
+}
+
+.hero-dot {
+  color: var(--editorial-accent);
+}
+
+.editorial-hero h2 {
+  max-width: 26ch;
+  margin-block: 1.25rem 1rem;
+  color: var(--ui-text-highlighted);
+  font-size: clamp(1.6rem, 3.6vw, 2.75rem);
+  font-weight: 500;
+  line-height: 1.12;
+  letter-spacing: -.035em;
   text-wrap: balance;
 }
 
@@ -72,7 +86,7 @@
 }
 
 .hero-intro {
-  font-size: clamp(1rem, 2vw, 1.25rem);
+  font-size: clamp(1rem, 2vw, 1.2rem);
 }
 
 .editorial-label {
@@ -171,38 +185,98 @@
   padding-top: .3rem;
 }
 
-.editorial-section > div > * + *,
-.editorial-topics p {
+.editorial-section > div > * + * {
   margin-top: .85rem;
 }
 
 .editorial-section h2:not(.editorial-label) {
-  max-width: 24ch;
+  max-width: 22ch;
   font-size: clamp(1.8rem, 4vw, 3.4rem);
   line-height: 1.05;
   font-weight: 700;
   letter-spacing: -.045em;
+  text-wrap: balance;
 }
 
-.editorial-topics {
+.editorial-wide {
+  grid-column: 1 / -1;
+  margin-block: 1.5rem;
+}
+
+/* A comfortable measure for long reading */
+.editorial-page {
+  max-width: 48rem;
+  margin-inline: auto;
+}
+
+.editorial-page .cycle,
+.editorial-page .editorial-facts {
+  margin-block: 2rem 2.5rem;
+}
+
+/* Areas of interest as numbered editorial rows */
+.editorial-topics li {
   display: grid;
-  gap: 1.5rem 2rem;
-}
-
-.editorial-topics li,
-.editorial-publications li {
-  padding-block: .9rem;
+  grid-template-columns: 2.5rem minmax(0, 1fr);
+  gap: .5rem 1rem;
+  padding-block: 1.75rem;
   border-bottom: 1px solid var(--editorial-line);
 }
 
-.editorial-topics h3 {
-  font-size: 1.35rem;
-  font-weight: 700;
-  line-height: 1.15;
+.editorial-topics li:first-child {
+  padding-top: 0;
 }
 
-.editorial-publications li p {
-  margin-top: .4rem;
+.editorial-topics li > div {
+  grid-column: 2;
+}
+
+.editorial-number {
+  color: var(--editorial-accent);
+  font-family: var(--font-mono);
+  font-size: .85rem;
+  font-weight: 600;
+  line-height: 2.1;
+}
+
+.editorial-topics h3 {
+  font-size: 1.6rem;
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -.025em;
+}
+
+.editorial-topics .editorial-label,
+.editorial-publications p {
+  margin-top: .5rem;
+}
+
+.editorial-facts {
+  padding-block: .75rem;
+}
+
+.editorial-facts > div {
+  display: grid;
+  gap: .15rem 1.5rem;
+  padding-block: .9rem;
+  border-top: 1px solid var(--editorial-line);
+}
+
+.editorial-facts dd {
+  color: var(--ui-text-highlighted);
+}
+
+.editorial-publications li {
+  display: grid;
+  gap: .35rem 1.5rem;
+  padding-block: 1.25rem;
+  border-bottom: 1px solid var(--editorial-line);
+}
+
+.editorial-publications h3 {
+  font-size: 1.2rem;
+  font-weight: 700;
+  line-height: 1.35;
 }
 
 .editorial-contacts {
@@ -211,9 +285,40 @@
   gap: .75rem 1.75rem;
 }
 
+.editorial-footer {
+  padding-block: 2.5rem;
+  border-top: 1px solid var(--editorial-line);
+  color: var(--editorial-muted);
+  font-size: .875rem;
+}
+
+.editorial-footer > div > div > * + * {
+  margin-top: .75rem;
+}
+
+.editorial-footer ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .25rem 1.5rem;
+}
+
+.editorial-footer a {
+  display: inline-block;
+  padding-block: .25rem;
+  text-decoration: underline;
+  text-underline-offset: .25em;
+}
+
 .editorial-case dt {
   margin-top: 1rem;
   font-weight: 600;
+}
+
+@media (min-width: 40rem) {
+  .editorial-facts > div {
+    grid-template-columns: 7rem minmax(0, 1fr);
+    align-items: baseline;
+  }
 }
 
 @media (min-width: 48rem) {
@@ -228,7 +333,21 @@
     grid-template-columns: minmax(9rem, 1fr) 3fr;
   }
 
-  .editorial-topics {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+  .editorial-aside {
+    grid-column: 2;
+  }
+}
+
+@media (min-width: 64rem) {
+  .editorial-topics li {
+    grid-template-columns: 2.5rem minmax(0, 2fr) minmax(0, 3fr);
+  }
+
+  .editorial-topics li > div {
+    grid-column: 3;
+  }
+
+  .editorial-publications li {
+    grid-template-columns: 10rem minmax(0, 1fr);
   }
 }

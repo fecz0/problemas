@@ -1,5 +1,19 @@
 import { test, expect } from '@playwright/test'
 
+const claim = 'A problémák érdekelnek. Főleg azok, amiket már mindenki megszokott.'
+
+test.describe('Layout', () => {
+  for (const width of [375, 390, 768, 1024, 1440, 1920]) {
+    test(`never scrolls sideways at ${width}px`, async ({ page }) => {
+      await page.setViewportSize({ width, height: 900 })
+      for (const path of ['/', '/rolam/', '/szemleletem/', '/problemak/haziorvosi-recept-1/']) {
+        await page.goto(path)
+        expect(await page.evaluate(() => document.documentElement.scrollWidth), path).toBeLessThanOrEqual(width)
+      }
+    })
+  }
+})
+
 test.describe('Home Page', () => {
   test('loads and displays main content', async ({ page }) => {
     await page.goto('/')
@@ -7,26 +21,64 @@ test.describe('Home Page', () => {
     // Check page title
     await expect(page).toHaveTitle(/Mile Ferenc/)
 
-    // Check hero section
-    await expect(page.getByRole('heading', { name: 'A problémák érdekelnek. Főleg azok, amiket már mindenki megszokott.' })).toBeVisible()
+    // The name leads, the claim follows
+    await expect(page.getByRole('heading', { level: 1, name: 'Mile Ferenc' })).toBeVisible()
+    await expect(page.getByRole('heading', { level: 2, name: claim })).toBeVisible()
 
     // Check navigation exists (use header navigation to avoid duplicates)
     const header = page.locator('header')
-    await expect(header.getByRole('link', { name: 'Gondolatok' })).toBeVisible()
-    await expect(header.getByRole('link', { name: 'Kapcsolat' })).toBeVisible()
-    await expect(header.getByRole('link', { name: 'Rólam' })).toBeVisible()
+    for (const name of ['Rólam', 'Szemléletem', 'Írások', 'Kapcsolat']) {
+      await expect(header.getByRole('link', { name })).toBeVisible()
+    }
   })
 
-  test('lists five Substack articles below the existing analysis', async ({ page }) => {
+  for (const [width, height] of [[375, 812], [390, 844], [1440, 900]] as const) {
+    test(`shows who, what and where next on the first ${width}px screen`, async ({ page }) => {
+      await page.setViewportSize({ width, height })
+      await page.goto('/')
+
+      for (const element of [
+        page.getByRole('heading', { level: 1 }),
+        page.getByRole('heading', { name: claim }),
+        page.getByRole('link', { name: 'Ismerj meg' }),
+      ]) {
+        await expect(element).toBeInViewport({ ratio: 1 })
+      }
+    })
+  }
+
+  test('lists five Substack articles and the analysis, newest first', async ({ page }) => {
     await page.goto('/')
 
-    const thoughts = page.getByRole('region', { name: 'Gondolatok' })
-    await expect(thoughts.getByRole('link').first()).toHaveAttribute('href', /\/problemak\/haziorvosi-recept-1\/?$/)
-    const publications = thoughts.locator('li').filter({ has: page.locator('a[href^="https://fecz0.substack.com/p/"]') })
+    const writings = page.getByRole('region', { name: 'Írások' })
+    await expect(writings.getByRole('link').first()).toHaveAttribute('href', /a-visszafordithatatlan-dontesek-csapdaja$/)
+    await expect(writings.getByRole('link').last()).toHaveAttribute('href', /\/problemak\/haziorvosi-recept-1\/?$/)
+    const dates = await writings.locator('time').evaluateAll(times => times.map(time => time.getAttribute('datetime')!))
+    expect(dates).toEqual([...dates].sort().reverse())
+    const publications = writings.locator('li').filter({ has: page.locator('a[href^="https://fecz0.substack.com/p/"]') })
     await expect(publications).toHaveCount(5)
     for (const publication of await publications.all()) {
-      await expect(publication.getByRole('link')).toBeVisible()
-      await expect(publication.locator('p')).not.toBeEmpty()
+      await expect(publication.getByRole('link')).toHaveAccessibleName(/külső oldal/)
+      await expect(publication).toContainText('Substack')
+    }
+  })
+
+  test('explains the problem-solving cycle as an ordered list', async ({ page }) => {
+    for (const path of ['/', '/szemleletem/']) {
+      await page.goto(path)
+
+      const steps = page.getByRole('list', { name: 'Problémamegoldási ciklus' }).getByRole('heading')
+      await expect(steps).toHaveText(['Megérteni', 'Egyszerűsíteni', 'Kipróbálni', 'Mérni', 'Javítani'])
+      await expect(page.getByText('Az ötödik lépés után újra az első következik.')).toBeAttached()
+    }
+  })
+
+  test('states the experience without naming employers on both pages', async ({ page }) => {
+    for (const path of ['/', '/rolam/']) {
+      await page.goto(path)
+
+      await expect(page.getByRole('main').getByRole('definition')).toHaveCount(3)
+      await expect(page.getByRole('main').getByRole('definition').first()).toContainText('Head of Development')
     }
   })
 })
@@ -51,7 +103,7 @@ test.describe('Rólam (About) Page', () => {
 
     // Should be on home page
     await expect(page).toHaveURL('/')
-    await expect(page.getByRole('heading', { name: 'A problémák érdekelnek. Főleg azok, amiket már mindenki megszokott.' })).toBeVisible()
+    await expect(page.getByRole('heading', { name: claim })).toBeVisible()
   })
 })
 
@@ -71,7 +123,7 @@ test.describe('Szemléletem (Philosophy) Page', () => {
     await page.goto('/')
 
     // Click on Szemléletem link
-    await page.getByRole('link', { name: 'Szemléletem' }).first().click()
+    await page.getByRole('main').getByRole('link', { name: 'Szemléletem' }).click()
 
     // Should navigate to the page
     await expect(page).toHaveURL(/szemleletem/)
@@ -92,6 +144,13 @@ test.describe('Problem Article Page', () => {
     await expect(page.getByText('Kutatás')).toBeVisible()
   })
 
+  test('keeps a sentence about 2027 as prose', async ({ page }) => {
+    await page.goto('/problemak/haziorvosi-recept-1')
+
+    // A year at the start of a line would turn into a numbered list
+    await expect(page.getByRole('main').getByRole('paragraph').filter({ hasText: '2027. január 1-jétől' })).toBeVisible()
+  })
+
   test('displays TL;DR section', async ({ page }) => {
     await page.goto('/problemak/haziorvosi-recept-1')
 
@@ -104,8 +163,8 @@ test.describe('Problem Article Page', () => {
 
     // Check discussion section
     await expect(page.getByText('Vitassuk meg')).toBeVisible()
-    await expect(page.getByRole('link', { name: 'LinkedIn' })).toBeVisible()
-    await expect(page.getByRole('link', { name: 'Bluesky' })).toBeVisible()
+    await expect(page.getByRole('main').getByRole('link', { name: 'LinkedIn' })).toBeVisible()
+    await expect(page.getByRole('main').getByRole('link', { name: 'Bluesky' })).toBeVisible()
   })
 
   test('displays incremental steps', async ({ page }) => {
@@ -130,7 +189,7 @@ test.describe('Content Links', () => {
   test('open external sources safely in a new tab', async ({ page }) => {
     await page.goto('/problemak/haziorvosi-recept-1')
 
-    const source = page.getByRole('main').locator('a[href^="https://www.nhsbsa.nhs.uk/"]')
+    const source = page.getByRole('main').locator('a[href$="electronic-repeat-dispensing-erd"]')
     await expect(source).toHaveCSS('text-decoration-line', 'underline')
     await expect(source).toHaveAttribute('target', '_blank')
     await expect(source).toHaveAttribute('rel', 'noopener noreferrer')
@@ -147,10 +206,19 @@ test.describe('Site Details', () => {
     }
   })
 
-  test('shows when an analysis was written', async ({ page }) => {
+  test('shows who wrote an analysis, when, and when it was updated', async ({ page }) => {
     await page.goto('/problemak/haziorvosi-recept-1')
 
-    await expect(page.getByRole('main').locator('time')).toHaveText('2025. február 3.')
+    const main = page.getByRole('main')
+    await expect(main.getByRole('link', { name: 'Mile Ferenc' })).toHaveAttribute('href', '/rolam/')
+    await expect(main.locator('time')).toHaveText(['2025. február 3.', '2026. november 26.'])
+  })
+
+  test('says whose opinions these are in the footer', async ({ page }) => {
+    await page.goto('/rolam')
+
+    await expect(page.getByRole('contentinfo')).toContainText('saját szakmai véleményemet')
+    await expect(page.getByRole('contentinfo').getByRole('link', { name: 'LinkedIn' })).toBeVisible()
   })
 
   test('requests nothing from third parties', async ({ page, baseURL }) => {
@@ -204,7 +272,7 @@ test.describe('Error Handling', () => {
     // Check error page displays and stays after the app has started
     await expect(page.getByText('404')).toBeVisible()
     await page.getByRole('link', { name: 'Vissza a főoldalra' }).click()
-    await expect(page.getByRole('heading', { name: 'A problémák érdekelnek. Főleg azok, amiket már mindenki megszokott.' })).toBeVisible()
+    await expect(page.getByRole('heading', { name: claim })).toBeVisible()
     expect(errors).toEqual([])
   })
 })
@@ -240,7 +308,8 @@ test.describe('Dark Mode', () => {
     await expect(page.getByRole('heading', { level: 1 })).toBeVisible()
     expect(await page.locator('body').evaluate(body => body.scrollWidth)).toBeLessThanOrEqual(375)
 
-    await page.getByRole('link', { name: 'Amivel foglalkozom' }).click()
-    await expect(page).toHaveURL(/#amivel-foglalkozom$/)
+    await page.getByRole('link', { name: 'Ahogy gondolkodom' }).click()
+    await expect(page).toHaveURL(/#szemlelet$/)
+    await expect(page.getByRole('heading', { name: 'A rosszul működő rendszer nem természeti törvény.' })).toBeInViewport()
   })
 })

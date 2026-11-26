@@ -1,5 +1,7 @@
 export default defineAppConfig({
-  // Public profiles, shown under contact and listed as `sameAs` in structured data
+  // The author's current role in structured data, matching content/data/experience.yml
+  jobTitle: 'Head of Development',
+  // Public profiles, shown under contact and in the footer, and listed as `sameAs`
   profiles: [
     { label: 'LinkedIn', url: 'https://www.linkedin.com/in/ferenc-mile-65038446/' },
     { label: 'Substack', url: 'https://fecz0.substack.com' },

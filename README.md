@@ -31,7 +31,8 @@ Pages are Markdown files in `content/`:
 
 - `index.md`: the home page, including the list of external publications
 - `rolam.md`, `szemleletem.md`: standalone pages
-- `problemak/`: on-site analyses, listed on the home page newest first
+- `problemak/`: on-site analyses, listed on the home page together with the publications, newest first
+- `data/`: the problem-solving cycle and the experience facts, used on several pages
 
 The available frontmatter fields are defined in `content.config.ts`.
 

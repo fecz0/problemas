@@ -8,6 +8,19 @@ const { data: problems } = await useAsyncData('problems', () => queryCollection(
 const home = computed(() => page.value?.home)
 const { profiles } = useAppConfig()
 
+// On-site analyses and external publications in one list, newest first
+const writings = computed(() => [
+  ...(problems.value ?? []).map(problem => ({
+    title: problem.title,
+    description: problem.tldr || problem.description,
+    url: problem.path,
+    date: problem.date!,
+    platform: 'Elemzés',
+    topics: problem.topics ?? [],
+  })),
+  ...(home.value?.thoughts.publications ?? []).map(publication => ({ ...publication, external: true })),
+].sort((a, b) => b.date.localeCompare(a.date)))
+
 if (page.value) {
   const title = page.value.seo?.title || page.value.title
   usePageSeo({
@@ -16,20 +29,22 @@ if (page.value) {
     title,
     heading: page.value.title,
     description: page.value.seo?.description || page.value.description,
+    knowsAbout: page.value.home?.topics.items.flatMap(topic => [topic.title, ...topic.themes]),
   })
 }
 </script>
 
 <template>
   <div v-if="home" class="editorial-home">
-    <section class="editorial-hero" :class="{ 'has-portrait': home.hero.portrait }">
+    <section class="editorial-hero" :class="{ 'has-portrait': home.hero.portrait }" aria-labelledby="nev">
       <div>
-        <p class="editorial-label">{{ home.hero.eyebrow }}</p>
-        <h1>{{ home.hero.heading }}</h1>
+        <h1 id="nev">{{ home.hero.name }}<span class="hero-dot" aria-hidden="true">.</span></h1>
+        <p class="editorial-label">{{ home.hero.tagline }}</p>
+        <h2>{{ home.hero.claim }}</h2>
         <p class="hero-intro">{{ home.hero.description }}</p>
         <div class="hero-actions">
-          <NuxtLink class="editorial-button" to="/rolam">{{ home.hero.aboutLabel }} <span aria-hidden="true">↗</span></NuxtLink>
-          <a class="editorial-link" href="#amivel-foglalkozom">{{ home.hero.topicsLabel }} <span aria-hidden="true">↓</span></a>
+          <NuxtLink class="editorial-button" to="/rolam">{{ home.hero.aboutLabel }} <span aria-hidden="true">→</span></NuxtLink>
+          <a class="editorial-link" href="#szemlelet">{{ home.hero.outlookLabel }} <span aria-hidden="true">↓</span></a>
         </div>
       </div>
       <img
@@ -42,45 +57,49 @@ if (page.value) {
       >
     </section>
 
-    <section class="editorial-section" aria-labelledby="szemlelet-cim">
+    <section id="szemlelet" class="editorial-section" aria-labelledby="szemlelet-cim">
       <p class="editorial-label">{{ home.outlook.label }}</p>
       <div>
         <h2 id="szemlelet-cim">{{ home.outlook.heading }}</h2>
         <p v-for="paragraph in home.outlook.paragraphs" :key="paragraph">{{ paragraph }}</p>
-        <NuxtLink class="editorial-link" to="/szemleletem">{{ home.outlook.linkLabel }} <span aria-hidden="true">↗</span></NuxtLink>
       </div>
+      <ProblemCycle class="editorial-wide" />
+      <p class="editorial-aside">
+        <NuxtLink class="editorial-link" to="/szemleletem">{{ home.outlook.linkLabel }} <span aria-hidden="true">→</span></NuxtLink>
+      </p>
     </section>
 
     <section id="amivel-foglalkozom" class="editorial-section" aria-labelledby="temak-cim">
       <h2 id="temak-cim" class="editorial-label">{{ home.topics.heading }}</h2>
-      <ul class="editorial-topics">
-        <li v-for="topic in home.topics.items" :key="topic.title">
+      <ol class="editorial-topics" role="list">
+        <li v-for="(topic, index) in home.topics.items" :key="topic.title">
+          <span class="editorial-number" aria-hidden="true">{{ String(index + 1).padStart(2, '0') }}</span>
           <h3>{{ topic.title }}</h3>
-          <p>{{ topic.description }}</p>
+          <div>
+            <p>{{ topic.description }}</p>
+            <p class="editorial-label">{{ topic.themes.join(' · ') }}</p>
+          </div>
         </li>
-      </ul>
+      </ol>
     </section>
 
     <section class="editorial-section" aria-labelledby="tapasztalat-cim">
-      <h2 id="tapasztalat-cim" class="editorial-label">{{ home.experience.heading }}</h2>
-      <div><p>{{ home.experience.description }}</p></div>
+      <p class="editorial-label">{{ home.experience.label }}</p>
+      <div>
+        <h2 id="tapasztalat-cim">{{ home.experience.heading }}</h2>
+        <p v-for="paragraph in home.experience.paragraphs" :key="paragraph">{{ paragraph }}</p>
+        <ExperienceFacts />
+        <p>
+          <NuxtLink class="editorial-link" to="/rolam">{{ home.experience.linkLabel }} <span aria-hidden="true">→</span></NuxtLink>
+        </p>
+      </div>
     </section>
 
     <section id="gondolatok" class="editorial-section" aria-labelledby="gondolatok-cim">
       <h2 id="gondolatok-cim" class="editorial-label">{{ home.thoughts.heading }}</h2>
       <div>
         <p>{{ home.thoughts.description }}</p>
-        <ul class="editorial-publications">
-          <li v-for="problem in problems" :key="problem.path">
-            <NuxtLink class="editorial-link" :to="problem.path">{{ problem.title }} <span aria-hidden="true">↗</span></NuxtLink>
-            <p v-if="problem.status" class="editorial-label">{{ problem.status }}</p>
-            <p v-if="problem.tldr">{{ problem.tldr }}</p>
-          </li>
-          <li v-for="publication in home.thoughts.publications" :key="publication.url">
-            <NuxtLink class="editorial-link" :to="publication.url" external>{{ publication.title }} <span aria-hidden="true">↗</span></NuxtLink>
-            <p>{{ publication.description }}</p>
-          </li>
-        </ul>
+        <PublicationList :items="writings" />
       </div>
     </section>
 

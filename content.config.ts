@@ -5,37 +5,49 @@ const headingAndDescription = z.object({
   description: z.string(),
 })
 
+const labelledSection = z.object({
+  label: z.string(),
+  heading: z.string(),
+  paragraphs: z.array(z.string()),
+  linkLabel: z.string(),
+})
+
 export default defineContentConfig({
   collections: {
     content: defineCollection({
       type: 'page',
-      source: '**',
+      source: { include: '**', exclude: ['data/**'] },
       schema: z.object({
         home: z.object({
-          hero: headingAndDescription.extend({
-            eyebrow: z.string(),
+          hero: z.object({
+            name: z.string(),
+            tagline: z.string(),
+            claim: z.string(),
+            description: z.string(),
             aboutLabel: z.string(),
-            topicsLabel: z.string(),
+            outlookLabel: z.string(),
             portrait: z.object({ src: z.string(), alt: z.string() }).optional(),
           }),
-          outlook: z.object({
-            label: z.string(),
-            heading: z.string(),
-            paragraphs: z.array(z.string()),
-            linkLabel: z.string(),
-          }),
+          outlook: labelledSection,
           topics: z.object({
             heading: z.string(),
-            items: z.array(z.object({ title: z.string(), description: z.string() })),
+            items: z.array(z.object({
+              title: z.string(),
+              description: z.string(),
+              themes: z.array(z.string()),
+            })),
           }),
-          experience: headingAndDescription,
+          experience: labelledSection,
           thoughts: headingAndDescription.extend({
             publications: z.array(z.object({
               title: z.string(),
               description: z.string(),
-              publisher: z.string().optional(),
               url: z.string().url(),
-            })).optional(),
+              date: z.string(),
+              platform: z.string(),
+              language: z.string(),
+              topics: z.array(z.string()),
+            })),
           }),
           contact: headingAndDescription,
         }).optional(),
@@ -45,10 +57,30 @@ export default defineContentConfig({
           outcome: z.string(),
         }).optional(),
         date: z.string().optional(),
+        updated: z.string().optional(),
+        topics: z.array(z.string()).optional(),
         tldr: z.string().optional(),
         status: z.enum(['Kutatás', 'Javaslat', 'Megvalósítás']).optional(),
         linkedin: z.string().url().optional(),
         bluesky: z.string().url().optional(),
+      }),
+    }),
+    // Shared by the home page and the Markdown pages
+    method: defineCollection({
+      type: 'data',
+      source: 'data/method.yml',
+      schema: z.object({
+        title: z.string(),
+        center: z.string(),
+        return: z.string(),
+        steps: z.array(z.object({ name: z.string(), description: z.string() })),
+      }),
+    }),
+    experience: defineCollection({
+      type: 'data',
+      source: 'data/experience.yml',
+      schema: z.object({
+        facts: z.array(z.object({ period: z.string(), text: z.string() })),
       }),
     }),
   },

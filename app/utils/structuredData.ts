@@ -17,9 +17,12 @@ export interface StructuredPage {
   heading: string
   description: string
   datePublished?: string
+  dateModified?: string
+  /** Topics the page visibly lists for the author */
+  knowsAbout?: string[]
 }
 
-export function structuredData(page: StructuredPage, sameAs: string[]) {
+export function structuredData(page: StructuredPage, author: { jobTitle: string, sameAs: string[] }) {
   const webPageId = `${page.url}#webpage`
   const breadcrumbId = `${page.url}#breadcrumb`
   const isHome = page.kind === 'home'
@@ -40,7 +43,10 @@ export function structuredData(page: StructuredPage, sameAs: string[]) {
       'name': AUTHOR_NAME,
       'url': profileUrl,
       'mainEntityOfPage': { '@id': `${profileUrl}#webpage` },
-      'sameAs': sameAs,
+      'sameAs': author.sameAs,
+      // Only where the visitor can read the role on the page
+      ...((isHome || isProfile) && { jobTitle: author.jobTitle }),
+      ...(page.knowsAbout && { knowsAbout: page.knowsAbout }),
       ...(isProfile && { description: page.description }),
     },
     {
@@ -64,6 +70,7 @@ export function structuredData(page: StructuredPage, sameAs: string[]) {
       'headline': page.heading,
       'description': page.description,
       'datePublished': page.datePublished,
+      'dateModified': page.dateModified,
       'inLanguage': 'hu',
       'author': { '@id': personId },
       'publisher': { '@id': personId },
