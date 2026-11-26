@@ -9,6 +9,7 @@ const pages = [
   { path: '/rolam/', type: 'profile', schema: ['WebSite', 'Person', 'ProfilePage', 'BreadcrumbList'] },
   { path: '/szemleletem/', type: 'website', schema: ['WebSite', 'Person', 'WebPage', 'BreadcrumbList'] },
   { path: '/problemak/haziorvosi-recept-1/', type: 'article', schema: ['WebSite', 'Person', 'WebPage', 'Article', 'BreadcrumbList'] },
+  { path: '/en/', type: 'profile', lang: 'en', schema: ['WebSite', 'Person', 'ProfilePage', 'BreadcrumbList'] },
 ]
 
 interface Node {
@@ -29,7 +30,7 @@ async function graph(page: Page): Promise<Node[]> {
 test.use({ javaScriptEnabled: false })
 
 test.describe('Static HTML', () => {
-  for (const { path, type, schema } of pages) {
+  for (const { path, type, schema, lang = 'hu' } of pages) {
     test(`describes ${path} for search and sharing`, async ({ page }) => {
       await page.goto(path)
       const url = `${SITE}${path}`
@@ -38,14 +39,17 @@ test.describe('Static HTML', () => {
 
       expect(title).toContain('Mile Ferenc')
       expect(description).toBeTruthy()
-      await expect(page.locator('html')).toHaveAttribute('lang', 'hu')
+      await expect(page.locator('html')).toHaveAttribute('lang', lang)
       await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href', url)
       await expect(page.getByRole('heading', { level: 1 })).toHaveCount(1)
       expect(await meta(page, 'og:title')).toBe(title)
       expect(await meta(page, 'og:description')).toBe(description)
       expect(await meta(page, 'og:url')).toBe(url)
       expect(await meta(page, 'og:type')).toBe(type)
-      expect(await meta(page, 'og:image')).toMatch(`${SITE}/`)
+      const image = `${SITE}/og-mile-ferenc${lang === 'en' ? '-en' : ''}.png`
+      expect(await meta(page, 'og:image')).toBe(image)
+      expect(await meta(page, 'twitter:image')).toBe(image)
+      expect(await meta(page, 'og:image:alt')).toContain('Mile Ferenc')
       expect(await page.locator('meta[name="robots"]').getAttribute('content')).not.toContain('noindex')
 
       const nodes = await graph(page)
@@ -53,6 +57,7 @@ test.describe('Static HTML', () => {
       expect(nodes.find(node => node['@type'] === 'Person')).toMatchObject({
         '@id': PERSON,
         'name': 'Mile Ferenc',
+        'alternateName': 'Ferenc Mile',
         'sameAs': expect.arrayContaining([
           'https://www.linkedin.com/in/ferenc-mile-65038446/',
           'https://github.com/fecz0',
@@ -87,6 +92,37 @@ test.describe('Static HTML', () => {
       dateModified: '2026-11-26',
       headline: await page.getByRole('heading', { level: 1 }).innerText(),
     })
+  })
+
+  test('pairs the Hungarian and English profiles', async ({ page }) => {
+    for (const path of ['/rolam/', '/en/']) {
+      await page.goto(path)
+      await expect(page.locator('link[hreflang="hu"][rel="alternate"]')).toHaveAttribute('href', `${SITE}/rolam/`)
+      await expect(page.locator('link[hreflang="en"][rel="alternate"]')).toHaveAttribute('href', `${SITE}/en/`)
+    }
+
+    // The English page doesn't state the current role, so its data doesn't either
+    expect((await graph(page)).find(node => node['@type'] === 'Person')).not.toHaveProperty('jobTitle')
+    await expect(page.getByText('I am Ferenc Mile, a technology leader')).toBeVisible()
+
+    for (const path of ['/', '/szemleletem/', '/problemak/haziorvosi-recept-1/']) {
+      await page.goto(path)
+      await expect(page.locator('link[rel="alternate"][hreflang]')).toHaveCount(0)
+    }
+  })
+
+  test('serves 1200×630 sharing images and every icon of the manifest', async ({ request }) => {
+    for (const file of ['/og-mile-ferenc.png', '/og-mile-ferenc-en.png']) {
+      const png = await (await request.get(file)).body()
+      // Width and height sit in the PNG header
+      expect([png.readUInt32BE(16), png.readUInt32BE(20)], file).toEqual([1200, 630])
+    }
+
+    const manifest = await (await request.get('/site.webmanifest')).json()
+    for (const { src, sizes } of manifest.icons) {
+      const png = await (await request.get(src)).body()
+      expect(`${png.readUInt32BE(16)}x${png.readUInt32BE(20)}`, src).toBe(sizes)
+    }
   })
 
   test('gives every page its own title and description', async ({ page }) => {

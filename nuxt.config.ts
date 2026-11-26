@@ -17,7 +17,7 @@ export default defineNuxtConfig({
     },
     families: [
       { name: 'Inter', provider: 'google', weights: [400, 500, 600, 700] },
-      { name: 'Space Grotesk', provider: 'google', weights: [500, 700] },
+      { name: 'Space Grotesk', provider: 'google', weights: [500, 700], preload: { weights: [700], subsets: ['latin'] } },
       { name: 'IBM Plex Mono', provider: 'google', weights: [400, 600] },
     ],
   },
@@ -46,7 +46,7 @@ export default defineNuxtConfig({
   // SSG configuration
   nitro: {
     prerender: {
-      routes: ['/', '/rolam/', '/szemleletem/', '/404.html'],
+      routes: ['/', '/rolam/', '/szemleletem/', '/en/', '/404.html'],
       crawlLinks: true,
       ignore: [
         '/.well-known/**',
@@ -84,16 +84,20 @@ export default defineNuxtConfig({
         { name: 'author', content: 'Mile Ferenc' },
         { property: 'og:locale', content: 'hu_HU' },
         { property: 'og:site_name', content: 'problemas.hu' },
-        { property: 'og:image', content: 'https://problemas.hu/problemas-background.png' },
+        // Rendered by scripts/render-brand-assets.mjs
+        { property: 'og:image', content: 'https://problemas.hu/og-mile-ferenc.png' },
         { property: 'og:image:width', content: '1200' },
-        { property: 'og:image:height', content: '634' },
+        { property: 'og:image:height', content: '630' },
+        { property: 'og:image:alt', content: 'Mile Ferenc. Technológia, emberek, rendszerek. A problémák érdekelnek. problemas.hu' },
         { name: 'twitter:card', content: 'summary_large_image' },
-        { name: 'twitter:image', content: 'https://problemas.hu/problemas-background.png' },
-        { name: 'apple-mobile-web-app-title', content: 'Problémás' },
+        { name: 'twitter:image', content: 'https://problemas.hu/og-mile-ferenc.png' },
+        { name: 'twitter:image:alt', content: 'Mile Ferenc. Technológia, emberek, rendszerek. A problémák érdekelnek. problemas.hu' },
+        { name: 'apple-mobile-web-app-title', content: 'problemas.hu' },
       ],
       link: [
+        { rel: 'icon', href: '/favicon.ico', sizes: '48x48' },
         { rel: 'icon', type: 'image/png', href: '/favicon-96x96.png', sizes: '96x96' },
-        { rel: 'shortcut icon', href: '/favicon.ico' },
+        { rel: 'icon', type: 'image/svg+xml', href: '/favicon.svg' },
         { rel: 'apple-touch-icon', sizes: '180x180', href: '/apple-touch-icon.png' },
         { rel: 'manifest', href: '/site.webmanifest' },
       ],

@@ -14,12 +14,15 @@ if (!page.value) {
 
 if (page.value) {
   const path = normalizedPath.value
-  const kind = path === '/rolam' ? 'profile' : path.startsWith('/problemak/') ? 'article' : 'page'
+  const language = path === '/en' ? 'en' : 'hu'
+  const kind = path === '/rolam' || path === '/en' ? 'profile' : path.startsWith('/problemak/') ? 'article' : 'page'
   const title = page.value.seo?.title || page.value.title
 
   usePageSeo({
     kind,
     path,
+    language,
+    knowsAbout: kind === 'profile' ? page.value.topics : undefined,
     title: [title, title.includes(AUTHOR_NAME) ? undefined : AUTHOR_NAME, 'problemas.hu'].filter(Boolean).join(' | '),
     heading: page.value.title,
     description: page.value.tldr || page.value.seo?.description || page.value.description,
@@ -31,7 +34,7 @@ if (page.value) {
 
 <template>
   <UPage v-if="page" class="editorial-page">
-    <UPageHeader :title="page.title">
+    <UPageHeader :title="page.title" :headline="page.headline">
       <template v-if="page.date" #headline>
         <div class="flex items-center gap-x-4 gap-y-2 flex-wrap">
           <NuxtLink class="editorial-label underline underline-offset-4" to="/rolam">{{ AUTHOR_NAME }}</NuxtLink>

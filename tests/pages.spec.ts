@@ -6,7 +6,7 @@ test.describe('Layout', () => {
   for (const width of [375, 390, 768, 1024, 1440, 1920]) {
     test(`never scrolls sideways at ${width}px`, async ({ page }) => {
       await page.setViewportSize({ width, height: 900 })
-      for (const path of ['/', '/rolam/', '/szemleletem/', '/problemak/haziorvosi-recept-1/']) {
+      for (const path of ['/', '/rolam/', '/szemleletem/', '/problemak/haziorvosi-recept-1/', '/en/']) {
         await page.goto(path)
         expect(await page.evaluate(() => document.documentElement.scrollWidth), path).toBeLessThanOrEqual(width)
       }
@@ -176,6 +176,38 @@ test.describe('Problem Article Page', () => {
   })
 })
 
+test.describe('English Profile', () => {
+  test('switches the whole page to English and back', async ({ page }) => {
+    await page.goto('/rolam/')
+    await page.waitForLoadState('networkidle')
+    await page.getByRole('link', { name: 'Profile in English' }).click()
+
+    await expect(page).toHaveURL('/en/')
+    await expect(page.locator('html')).toHaveAttribute('lang', 'en')
+    await expect(page.getByRole('heading', { level: 1, name: 'Mile Ferenc' })).toBeVisible()
+    await expect(page.getByRole('link', { name: 'Skip to content' })).toBeAttached()
+    await expect(page.getByRole('button', { name: /Switch to (dark|light) mode/ })).toBeVisible()
+    await expect(page.getByRole('contentinfo')).toContainText('my own')
+
+    await page.getByRole('link', { name: 'Magyarul' }).click()
+    await expect(page).toHaveURL('/rolam/')
+    await expect(page.locator('html')).toHaveAttribute('lang', 'hu')
+    await expect(page.getByRole('link', { name: 'Ugrás a tartalomra' })).toBeAttached()
+  })
+
+  test('marks its articles as Hungarian and lists the profiles', async ({ page }) => {
+    await page.goto('/en/')
+    const main = page.getByRole('main')
+
+    const articles = main.locator('a[href^="https://fecz0.substack.com/p/"]')
+    await expect(articles).toHaveCount(3)
+    for (const article of await articles.all()) await expect(article).toHaveAttribute('hreflang', 'hu')
+    for (const name of ['LinkedIn', 'Substack', 'Bluesky', 'GitHub']) {
+      await expect(main.getByRole('list').getByRole('link', { name })).toBeVisible()
+    }
+  })
+})
+
 test.describe('Content Links', () => {
   test('are underlined so they stand out from body text', async ({ page }) => {
     await page.goto('/rolam')
@@ -278,11 +310,11 @@ test.describe('Error Handling', () => {
 })
 
 test.describe('Keyboard', () => {
-  for (const path of ['/', '/rolam/']) {
+  for (const [path, label] of [['/', 'Ugrás a tartalomra'], ['/rolam/', 'Ugrás a tartalomra'], ['/en/', 'Skip to content']] as const) {
     test(`can skip straight to the content of ${path}`, async ({ page }) => {
       await page.goto(path)
       await page.waitForLoadState('networkidle')
-      const skip = page.getByRole('link', { name: 'Ugrás a tartalomra' })
+      const skip = page.getByRole('link', { name: label })
 
       await expect(skip).not.toBeInViewport()
       await page.keyboard.press('Tab')

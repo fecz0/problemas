@@ -1,6 +1,6 @@
 # problemas.hu
 
-[Mile Ferenc](https://problemas.hu/rolam/)'s personal website, in Hungarian: an introduction, a way of thinking about problems, and writing on technology, organizations and shared systems.
+[Mile Ferenc](https://problemas.hu/rolam/)'s personal website, in Hungarian with a short profile in English: an introduction, a way of thinking about problems, and writing on technology, organizations and shared systems.
 
 It is a static site built with [Nuxt 4](https://nuxt.com/), [Nuxt Content](https://content.nuxt.com/) and [Nuxt UI](https://ui.nuxt.com/), deployed to GitHub Pages.
 
@@ -31,10 +31,20 @@ Pages are Markdown files in `content/`:
 
 - `index.md`: the home page, including the list of external publications
 - `rolam.md`, `szemleletem.md`: standalone pages
+- `en.md`: the English profile at `/en/`
 - `problemak/`: on-site analyses, listed on the home page together with the publications, newest first
 - `data/`: the problem-solving cycle and the experience facts, used on several pages
 
 The available frontmatter fields are defined in `content.config.ts`.
+
+## Sharing images and icons
+
+`public/` holds the generated files. After changing them in `scripts/render-brand-assets.mjs`, render and commit them:
+
+```bash
+pnpm generate
+node scripts/render-brand-assets.mjs
+```
 
 ## Deployment
 

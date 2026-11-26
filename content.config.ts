@@ -51,6 +51,8 @@ export default defineContentConfig({
           }),
           contact: headingAndDescription,
         }).optional(),
+        /** Short line above the page title */
+        headline: z.string().optional(),
         caseStudy: z.object({
           context: z.string(),
           role: z.string(),

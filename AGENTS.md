@@ -24,16 +24,18 @@ Before calling a change done, run lint, typecheck, vitest and e2e; run `pnpm gen
 
 ## Layout
 
-- `content/`: Markdown pages. `index.md` holds the home page as frontmatter, including external publications; `problemak/` holds on-site analyses; `data/` holds the problem-solving cycle and the experience facts, shared by several pages. Schema: `content.config.ts`.
+- `content/`: Markdown pages. `index.md` holds the home page as frontmatter, including external publications; `en.md` is the English profile; `problemak/` holds on-site analyses; `data/` holds the problem-solving cycle and the experience facts, shared by several pages. Schema: `content.config.ts`.
 - `app/pages/index.vue` renders the home page, `app/pages/[...slug].vue` every other page.
-- SEO: pages call `app/composables/usePageSeo.ts` (meta, canonical, JSON-LD); the schema.org graph is built in `app/utils/structuredData.ts`. Public profiles live in `app/app.config.ts`.
-- `app/components/`: `IncrementalSteps`, `StepItem`, `ProblemCycle` and `ExperienceFacts` are used from Markdown (MDC).
+- `app/layouts/en.vue` is the header and footer of `/en/`; `app/app.vue` picks it and the English UI locale by route. There is no i18n module.
+- `scripts/render-brand-assets.mjs` renders the sharing images and site icons into `public/`; run it after `pnpm generate` and commit the output. Give a changed sharing image a new file name, because social networks cache it by URL.
+- SEO: pages call `app/composables/usePageSeo.ts` (meta, canonical, `hreflang`, JSON-LD); the schema.org graph is built in `app/utils/structuredData.ts`. Public profiles live in `app/app.config.ts`.
+- `app/components/`: `IncrementalSteps`, `StepItem`, `ProblemCycle`, `ExperienceFacts` and `ProfileLinks` are used from Markdown (MDC).
 - `app/assets/css/main.css`: fonts, color tokens and the `editorial-*` styles. `app/app.config.ts`: Nuxt UI theme.
 - `test/nuxt/`: Vitest component tests. `tests/`: Playwright, served by `scripts/serve-static.mjs`; `tests/static.spec.ts` checks the generated HTML without JavaScript.
 
 ## Content and design rules
 
-- Site text is Hungarian. Code, comments and commit messages are English.
+- Site text is Hungarian, except the English profile at `/en/`. Code, comments and commit messages are English.
 - Never invent facts, experience, numbers or quotes about the author. Ask.
 - Don't name the author's current or past employers, anywhere in the repository.
 - Factual claims need a source or an explicit note that they are estimates.
