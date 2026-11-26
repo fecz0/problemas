@@ -99,3 +99,38 @@ jobs:
           name: playwright-report
           path: playwright-report/
           retention-days: 7
+
+  # Dependabot patch/minor PRs are merged here, only after every check above passed.
+  # Pushes made with GITHUB_TOKEN don't trigger workflows, so the deploy is
+  # dispatched explicitly after the merge. Majors always need a human.
+  dependabot-merge:
+    name: Dependabot merge & deploy
+    needs: [lint, test, e2e]
+    if: >-
+      github.event_name == 'pull_request' &&
+      github.event.pull_request.user.login == 'dependabot[bot]' &&
+      github.actor == 'dependabot[bot]'
+    runs-on: ubuntu-latest
+    permissions:
+      actions: write
+      contents: write
+      pull-requests: write
+    steps:
+      - name: Fetch Dependabot metadata
+        id: metadata
+        uses: dependabot/fetch-metadata@25dd0e34f4fe68f24cc83900b1fe3fe149efef98 # v3.1.0
+        with:
+          github-token: "${{ secrets.GITHUB_TOKEN }}"
+
+      - name: Merge and deploy (patch/minor only)
+        if: |
+          steps.metadata.outputs.update-type == 'version-update:semver-patch' ||
+          steps.metadata.outputs.update-type == 'version-update:semver-minor'
+        run: |
+          gh pr merge --squash --match-head-commit "$HEAD_SHA" "$PR_URL"
+          gh workflow run deploy.yml --ref main
+        env:
+          GH_REPO: ${{ github.repository }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+          PR_URL: ${{ github.event.pull_request.html_url }}
