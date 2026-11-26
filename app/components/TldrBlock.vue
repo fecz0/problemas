@@ -9,8 +9,9 @@ defineProps<{
     title="TL;DR"
     :description="text"
     icon="i-heroicons-light-bulb"
-    color="info"
-    variant="subtle"
+    color="primary"
+    variant="outline"
+    :ui="{ title: 'text-highlighted', description: 'text-muted opacity-100 leading-relaxed' }"
     class="mb-8"
   />
 </template>
