@@ -15,6 +15,11 @@ if (!page.value) {
 // Dynamic SEO meta tags
 const isProfile = computed(() => normalizedPath.value === '/rolam')
 const { linkedinUrl } = useRuntimeConfig().public
+const { profiles } = useAppConfig()
+const sameAs = [linkedinUrl, ...profiles.map(profile => profile.url)].filter(Boolean)
+const publishedOn = computed(() => page.value?.date
+  ? new Intl.DateTimeFormat('hu-HU', { dateStyle: 'long', timeZone: 'UTC' }).format(new Date(page.value.date))
+  : undefined)
 const pageTitle = computed(() => {
   const title = page.value?.title
   return [title, isProfile.value ? undefined : 'Mile Ferenc', 'problemas.hu'].filter(Boolean).join(' | ')
@@ -33,9 +38,6 @@ useSeoMeta({
   ogDescription: pageDescription,
   ogUrl: pageUrl,
   ogType: () => isProfile.value ? 'profile' : 'article',
-  ogLocale: 'hu_HU',
-  ogSiteName: 'problemas.hu',
-  twitterCard: 'summary_large_image',
   twitterTitle: pageTitle,
   twitterDescription: pageDescription,
 })
@@ -55,7 +57,7 @@ useHead(() => ({
             'name': page.value?.title,
             'description': page.value?.description,
             'url': pageUrl.value,
-            'sameAs': linkedinUrl ? [linkedinUrl] : undefined,
+            'sameAs': sameAs,
           },
         }).replace(/</g, '\\u003c'),
       }]
@@ -64,10 +66,14 @@ useHead(() => ({
 </script>
 
 <template>
-  <UPage v-if="page" :class="{ 'editorial-profile': isProfile }">
+  <UPage v-if="page" class="editorial-page">
     <UPageHeader
       :title="page.title"
     >
+      <template v-if="publishedOn" #headline>
+        <time class="editorial-label" :datetime="page.date">{{ publishedOn }}</time>
+      </template>
+
       <template #title>
         <div class="flex items-center gap-3 flex-wrap">
           <span>{{ page.title }}</span>

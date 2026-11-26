@@ -5,13 +5,6 @@ import { defineVitestProject } from '@nuxt/test-utils/config'
 export default defineConfig({
   test: {
     projects: [
-      {
-        test: {
-          name: 'unit',
-          include: ['test/unit/*.{test,spec}.ts'],
-          environment: 'node',
-        },
-      },
       await defineVitestProject({
         test: {
           name: 'nuxt',
@@ -27,7 +20,6 @@ export default defineConfig({
       }),
     ],
     coverage: {
-      enabled: true,
       provider: 'v8',
     },
   },

@@ -7,6 +7,11 @@ const { data: problems } = await useAsyncData('problems', () => queryCollection(
 
 const home = computed(() => page.value?.home)
 const { linkedinUrl } = useRuntimeConfig().public
+const { profiles } = useAppConfig()
+const contactLinks = [
+  ...(linkedinUrl ? [{ label: 'LinkedIn', url: linkedinUrl }] : []),
+  ...profiles,
+]
 
 useSeoMeta({
   title: () => page.value?.title,
@@ -90,7 +95,11 @@ useHead({ link: [{ rel: 'canonical', href: 'https://problemas.hu/' }] })
       <h2 id="kapcsolat-cim" class="editorial-label">{{ home.contact.heading }}</h2>
       <div>
         <p>{{ linkedinUrl ? home.contact.description : home.contact.unavailable }}</p>
-        <NuxtLink v-if="linkedinUrl" class="editorial-link" :to="linkedinUrl" external>LinkedIn <span aria-hidden="true">↗</span></NuxtLink>
+        <ul class="editorial-contacts">
+          <li v-for="link in contactLinks" :key="link.url">
+            <NuxtLink class="editorial-link" :to="link.url" external>{{ link.label }} <span aria-hidden="true">↗</span></NuxtLink>
+          </li>
+        </ul>
       </div>
     </section>
   </div>

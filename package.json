@@ -4,8 +4,8 @@
   "private": true,
   "type": "module",
   "license": "MIT",
-  "description": "Content-driven web application for analyzing complex societal problems with incremental solutions",
-  "author": "problemas.hu",
+  "description": "Mile Ferenc's personal website",
+  "author": "Mile Ferenc",
   "repository": {
     "type": "git",
     "url": "https://github.com/fecz0/problemas"
@@ -17,14 +17,11 @@
     "preview": "nuxt preview",
     "test": "vitest",
     "test:watch": "vitest --watch",
-    "test:coverage": "vitest --coverage",
-    "test:unit": "vitest --project unit",
-    "test:nuxt": "vitest --project nuxt",
+    "test:coverage": "vitest run --coverage.enabled",
     "test:e2e": "playwright test",
     "test:e2e:ui": "playwright test --ui"
   },
   "dependencies": {
-    "@nuxt/a11y": "1.0.0-alpha.1",
     "@nuxt/content": "^3.17.0",
     "@nuxt/ui": "4.13.1",
     "@nuxtjs/sitemap": "^9.2.0",
@@ -33,16 +30,16 @@
     "typescript": "^6.0.3"
   },
   "devDependencies": {
+    "@iconify-json/lucide": "^1.2.159",
+    "@iconify-json/simple-icons": "^1.2.104",
     "@nuxt/eslint": "^1.17.0",
     "@nuxt/test-utils": "^4.4.0",
     "@playwright/test": "^1.65.1",
     "@types/node": "^26.6.10",
     "@vitest/coverage-v8": "^5.1.1",
     "@vue/test-utils": "^2.6.0",
-    "better-sqlite3": "^13.2.0",
     "eslint": "^10.15.0",
     "happy-dom": "^21.0.4",
-    "playwright-core": "^1.65.1",
     "vitest": "^5.1.1",
     "vue-tsc": "^3.3.14"
   },

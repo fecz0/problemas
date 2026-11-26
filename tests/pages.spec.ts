@@ -1,10 +1,8 @@
 import { test, expect } from '@playwright/test'
 
-const BASE_URL = process.env.BASE_URL || 'http://localhost:3000'
-
 test.describe('Home Page', () => {
   test('loads and displays main content', async ({ page }) => {
-    await page.goto(BASE_URL)
+    await page.goto('/')
 
     // Check page title
     await expect(page).toHaveTitle(/Mile Ferenc/)
@@ -20,7 +18,7 @@ test.describe('Home Page', () => {
   })
 
   test('lists five Substack articles below the existing analysis', async ({ page }) => {
-    await page.goto(BASE_URL)
+    await page.goto('/')
 
     const thoughts = page.getByRole('region', { name: 'Gondolatok' })
     await expect(thoughts.getByRole('link').first()).toHaveAttribute('href', /\/problemak\/haziorvosi-recept-1\/?$/)
@@ -35,7 +33,7 @@ test.describe('Home Page', () => {
 
 test.describe('Rólam (About) Page', () => {
   test('loads and displays content', async ({ page }) => {
-    await page.goto(`${BASE_URL}/rolam`)
+    await page.goto('/rolam')
 
     // Check page loads with content
     await expect(page).toHaveTitle(/Mile Ferenc/)
@@ -46,20 +44,20 @@ test.describe('Rólam (About) Page', () => {
   })
 
   test('has working navigation back to home', async ({ page }) => {
-    await page.goto(`${BASE_URL}/rolam`)
+    await page.goto('/rolam')
 
     // Click on logo/home link to go back
     await page.getByRole('link', { name: /problemas\.hu/i }).first().click()
 
     // Should be on home page
-    await expect(page).toHaveURL(BASE_URL)
+    await expect(page).toHaveURL('/')
     await expect(page.getByRole('heading', { name: 'A problémák érdekelnek. Főleg azok, amiket már mindenki megszokott.' })).toBeVisible()
   })
 })
 
 test.describe('Szemléletem (Philosophy) Page', () => {
   test('loads and displays content', async ({ page }) => {
-    await page.goto(`${BASE_URL}/szemleletem`)
+    await page.goto('/szemleletem')
 
     // Check page loads
     await expect(page).toHaveTitle(/problemas\.hu/)
@@ -70,7 +68,7 @@ test.describe('Szemléletem (Philosophy) Page', () => {
   })
 
   test('navigation from home works', async ({ page }) => {
-    await page.goto(BASE_URL)
+    await page.goto('/')
 
     // Click on Szemléletem link
     await page.getByRole('link', { name: 'Szemléletem' }).first().click()
@@ -82,7 +80,7 @@ test.describe('Szemléletem (Philosophy) Page', () => {
 
 test.describe('Problem Article Page', () => {
   test('loads haziorvosi-recept article', async ({ page }) => {
-    await page.goto(`${BASE_URL}/problemak/haziorvosi-recept-1`)
+    await page.goto('/problemak/haziorvosi-recept-1')
 
     // Check page title includes the article info
     await expect(page).toHaveTitle(/problemas\.hu/)
@@ -95,14 +93,14 @@ test.describe('Problem Article Page', () => {
   })
 
   test('displays TL;DR section', async ({ page }) => {
-    await page.goto(`${BASE_URL}/problemak/haziorvosi-recept-1`)
+    await page.goto('/problemak/haziorvosi-recept-1')
 
     // Check TL;DR block exists
     await expect(page.getByText('TL;DR')).toBeVisible()
   })
 
   test('displays discussion links', async ({ page }) => {
-    await page.goto(`${BASE_URL}/problemak/haziorvosi-recept-1`)
+    await page.goto('/problemak/haziorvosi-recept-1')
 
     // Check discussion section
     await expect(page.getByText('Vitassuk meg')).toBeVisible()
@@ -111,7 +109,7 @@ test.describe('Problem Article Page', () => {
   })
 
   test('displays incremental steps', async ({ page }) => {
-    await page.goto(`${BASE_URL}/problemak/haziorvosi-recept-1`)
+    await page.goto('/problemak/haziorvosi-recept-1')
 
     // Check steps are rendered
     await expect(page.getByText('Jelenlegi állapot')).toBeVisible()
@@ -121,7 +119,7 @@ test.describe('Problem Article Page', () => {
 
 test.describe('Content Links', () => {
   test('are underlined so they stand out from body text', async ({ page }) => {
-    await page.goto(`${BASE_URL}/rolam`)
+    await page.goto('/rolam')
 
     const link = page.getByRole('main').getByRole('link', { name: 'Szemléletem' })
     await expect(link).toHaveCSS('text-decoration-line', 'underline')
@@ -130,7 +128,7 @@ test.describe('Content Links', () => {
   })
 
   test('open external sources safely in a new tab', async ({ page }) => {
-    await page.goto(`${BASE_URL}/problemak/haziorvosi-recept-1`)
+    await page.goto('/problemak/haziorvosi-recept-1')
 
     const source = page.getByRole('main').locator('a[href^="https://www.nhsbsa.nhs.uk/"]')
     await expect(source).toHaveCSS('text-decoration-line', 'underline')
@@ -139,9 +137,49 @@ test.describe('Content Links', () => {
   })
 })
 
+test.describe('Site Details', () => {
+  test('lists every public profile under contact', async ({ page }) => {
+    await page.goto('/')
+
+    const contact = page.getByRole('region', { name: 'Kapcsolat' })
+    for (const name of ['Substack', 'Bluesky', 'GitHub']) {
+      await expect(contact.getByRole('link', { name })).toBeVisible()
+    }
+  })
+
+  test('shows when an analysis was written', async ({ page }) => {
+    await page.goto('/problemak/haziorvosi-recept-1')
+
+    await expect(page.getByRole('main').locator('time')).toHaveText('2025. február 3.')
+  })
+
+  test('requests nothing from third parties', async ({ page, baseURL }) => {
+    const external: string[] = []
+    page.on('request', (request) => {
+      const url = new URL(request.url())
+      if (url.protocol.startsWith('http') && url.origin !== new URL(baseURL!).origin) external.push(url.href)
+    })
+
+    await page.goto('/')
+    await page.getByRole('link', { name: /Ismétlődő eRecept/ }).click()
+    await expect(page.getByText('Vitassuk meg')).toBeVisible()
+    await page.waitForLoadState('networkidle')
+
+    expect(external).toEqual([])
+  })
+
+  test('serves its own display font', async ({ page }) => {
+    await page.goto('/')
+
+    await expect.poll(() => page.evaluate(() => [...document.fonts].some(font =>
+      font.family.replaceAll('"', '') === 'Space Grotesk' && font.status === 'loaded',
+    ))).toBe(true)
+  })
+})
+
 test.describe('Error Handling', () => {
   test('shows 404 for non-existent page', async ({ page }) => {
-    await page.goto(`${BASE_URL}/non-existent-page-12345`)
+    await page.goto('/non-existent-page-12345')
 
     // Check error page displays
     await expect(page.getByText('404')).toBeVisible()
@@ -152,10 +190,10 @@ test.describe('Dark Mode', () => {
   test('keeps the hero readable in both color modes on mobile', async ({ page }) => {
     await page.setViewportSize({ width: 375, height: 812 })
     await page.emulateMedia({ colorScheme: 'light' })
-    await page.goto(BASE_URL)
+    await page.goto('/')
 
     await expect(page.locator('body')).toHaveCSS('background-color', 'rgb(242, 240, 233)')
-    await expect(page.locator('header').getByRole('button', { name: /dark mode/i })).toBeVisible()
+    await expect(page.locator('header').getByRole('button', { name: /sötét módra|világos módra/ })).toBeVisible()
     await page.emulateMedia({ colorScheme: 'dark' })
     await page.reload()
     await expect(page.locator('body')).toHaveCSS('background-color', 'rgb(17, 20, 25)')

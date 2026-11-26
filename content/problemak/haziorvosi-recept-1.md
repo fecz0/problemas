@@ -79,7 +79,7 @@ Ez a javaslat nem igényel új kórházépítést vagy több ezer új orvost. Ez
 ## Források és nemzetközi példák
 
 * **NHS England:** [Az NHS BSA hivatalos oldala a folyamat leírásával, videókkal és letölthető kézikönyvvel](https://www.nhsbsa.nhs.uk/pharmacies-gp-practices-and-appliance-contractors/prescribing-and-dispensing/electronic-repeat-dispensing-erd)
-* **e-Estonia:** [Átfogó leírás az észt rendszerről, amely 100%-ban digitális receptkezelésre állt át](https://e-estonia.com/solutions/e-health-2/e-prescription/)
+* **e-Estonia:** [Átfogó leírás az észt rendszerről, amely 100%-ban digitális receptkezelésre állt át](https://e-estonia.com/service/e-health/e-prescription/)
 * **Országos Kórházi Főigazgatóság:** [Hivatalos statisztikák és fejlesztési irányok](https://enkk.hu/hmr/index.php/hmr-beszamolok)
 * **MOK:** [MOK Orvosok Lapja](https://orvosoklapja.mok.hu/category/jogoskerdesek/)
 

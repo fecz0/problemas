@@ -8,7 +8,7 @@ defineProps<{
   <UAlert
     title="TL;DR"
     :description="text"
-    icon="i-heroicons-light-bulb"
+    icon="i-lucide-lightbulb"
     color="primary"
     variant="outline"
     :ui="{ title: 'text-highlighted', description: 'text-muted opacity-100 leading-relaxed' }"

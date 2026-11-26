@@ -72,8 +72,7 @@ Update them to match the new content.
 
 ```bash
 pnpm exec nuxi typecheck
-pnpm test:e2e
-pnpm generate
+pnpm test:e2e   # also builds the static site
 ```
 
 Then open the home page and the new page in the dev server, in light and dark mode. Publish through a pull request; merging to `main` deploys the site.

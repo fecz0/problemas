@@ -42,8 +42,5 @@ const navigation = [
         &copy; {{ new Date().getFullYear() }} Mile Ferenc
       </p>
     </template>
-    <template #right>
-      <UColorModeButton />
-    </template>
   </UFooter>
 </template>

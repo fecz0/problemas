@@ -16,8 +16,8 @@ pnpm generate               # static build into .output/public (what gets deploy
 pnpm preview                # preview the build
 pnpm exec eslint .          # lint (--fix to auto-fix)
 pnpm exec nuxi typecheck    # type check
-pnpm exec vitest run        # unit and component tests, single run (`pnpm test` watches)
-pnpm test:e2e               # Playwright tests in tests/
+pnpm exec vitest run        # component tests, single run (`pnpm test` watches)
+pnpm test:e2e               # builds the static site, then runs Playwright against it
 ```
 
 Before calling a change done, run lint, typecheck, vitest and e2e; run `pnpm generate` too when content, config or routing changed. Check visual changes in light and dark mode, desktop and mobile.
@@ -28,7 +28,7 @@ Before calling a change done, run lint, typecheck, vitest and e2e; run `pnpm gen
 - `app/pages/index.vue` renders the home page, `app/pages/[...slug].vue` every other page, including SEO meta and structured data.
 - `app/components/`: `IncrementalSteps` and `StepItem` are used from Markdown (MDC).
 - `app/assets/css/main.css`: fonts, color tokens and the `editorial-*` styles. `app/app.config.ts`: Nuxt UI theme.
-- `test/unit/`, `test/nuxt/`: Vitest. `tests/`: Playwright.
+- `test/nuxt/`: Vitest component tests. `tests/`: Playwright, served by `scripts/serve-static.mjs`.
 
 ## Content and design rules
 
@@ -37,11 +37,12 @@ Before calling a change done, run lint, typecheck, vitest and e2e; run `pnpm gen
 - Factual claims need a source or an explicit note that they are estimates.
 - Use the existing `--editorial-*` and Nuxt UI semantic tokens, not raw colors.
 - Links in content stay underlined.
+- No third-party requests at runtime: fonts come from `@nuxt/fonts`, icons from the installed `@iconify-json/*` packages (`lucide`, `simple-icons`).
 
 ## Delivery
 
-- Work on a branch and open a pull request. Merging to `main` deploys.
-- `main` requires the three CI checks. Dependabot patch and minor PRs are merged and deployed by the last job in `.github/workflows/ci.yml`; majors need a human.
+- Work on a branch and open a pull request. `ci.yml` checks every PR; on `main` it also deploys, by calling `deploy.yml`.
+- `main` requires the three check jobs, so keep their names. Dependabot patch and minor PRs are merged by the `dependabot-merge` job; majors need a human.
 
 ## Gotchas
 
