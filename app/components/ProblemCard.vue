@@ -5,12 +5,6 @@ defineProps<{
   to: string
   status?: 'Kutatás' | 'Javaslat' | 'Megvalósítás'
 }>()
-
-const statusColors: Record<'Kutatás' | 'Javaslat' | 'Megvalósítás', 'warning' | 'info' | 'success'> = {
-  'Kutatás': 'warning',
-  'Javaslat': 'info',
-  'Megvalósítás': 'success',
-}
 </script>
 
 <template>
@@ -25,8 +19,8 @@ const statusColors: Record<'Kutatás' | 'Javaslat' | 'Megvalósítás', 'warning
     <template #footer>
       <UBadge
         v-if="status"
-        :color="statusColors[status]"
-        variant="subtle"
+        color="primary"
+        variant="outline"
       >
         {{ status }}
       </UBadge>

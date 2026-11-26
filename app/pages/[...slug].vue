@@ -12,12 +12,6 @@ if (!page.value) {
   throw createError({ statusCode: 404, statusMessage: 'Page not found', fatal: true })
 }
 
-const statusColors: Record<'Kutatás' | 'Javaslat' | 'Megvalósítás', 'warning' | 'info' | 'success'> = {
-  'Kutatás': 'warning',
-  'Javaslat': 'info',
-  'Megvalósítás': 'success',
-}
-
 // Dynamic SEO meta tags
 const isProfile = computed(() => normalizedPath.value === '/rolam')
 const { linkedinUrl } = useRuntimeConfig().public
@@ -79,8 +73,8 @@ useHead(() => ({
           <span>{{ page.title }}</span>
           <UBadge
             v-if="page.status"
-            :color="statusColors[page.status as keyof typeof statusColors]"
-            variant="subtle"
+            color="primary"
+            variant="outline"
             size="lg"
           >
             {{ page.status }}
