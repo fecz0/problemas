@@ -1,5 +1,7 @@
 ---
 title: Szemléletem
+seo:
+  description: Mile Ferenc szemlélete a problémamegoldásról. Fokozatos lépések, mérhető változás, vállalt bizonytalanság és nyilvános visszacsatolás.
 description: A cél nem az, hogy „mindent megjavítsunk”, hanem hogy kevesebb energia vesszen el, kevesebb ember égjen ki, és a rendszer egy kicsivel jobban működjön, mint tegnap.
 ---
 

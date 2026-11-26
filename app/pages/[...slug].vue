@@ -12,71 +12,32 @@ if (!page.value) {
   throw createError({ statusCode: 404, statusMessage: 'Page not found', fatal: true })
 }
 
-// Dynamic SEO meta tags
-const isProfile = computed(() => normalizedPath.value === '/rolam')
-const { linkedinUrl } = useRuntimeConfig().public
-const { profiles } = useAppConfig()
-const sameAs = [linkedinUrl, ...profiles.map(profile => profile.url)].filter(Boolean)
 const publishedOn = computed(() => page.value?.date
   ? new Intl.DateTimeFormat('hu-HU', { dateStyle: 'long', timeZone: 'UTC' }).format(new Date(page.value.date))
   : undefined)
-const pageTitle = computed(() => {
-  const title = page.value?.title
-  return [title, isProfile.value ? undefined : 'Mile Ferenc', 'problemas.hu'].filter(Boolean).join(' | ')
-})
-const pageDescription = computed(() => page.value?.tldr || page.value?.description || 'Társadalmi problémák elemzése és fokozatos megoldási javaslatok')
-// Canonical URL with trailing slash (matching site.trailingSlash: true)
-const pageUrl = computed(() => {
+
+if (page.value) {
   const path = normalizedPath.value
-  return `https://problemas.hu${path}${path === '/' ? '' : '/'}`
-})
+  const kind = path === '/rolam' ? 'profile' : path.startsWith('/problemak/') ? 'article' : 'page'
+  const title = page.value.seo?.title || page.value.title
 
-useSeoMeta({
-  title: pageTitle,
-  description: pageDescription,
-  ogTitle: pageTitle,
-  ogDescription: pageDescription,
-  ogUrl: pageUrl,
-  ogType: () => isProfile.value ? 'profile' : 'article',
-  twitterTitle: pageTitle,
-  twitterDescription: pageDescription,
-})
-
-useHead(() => ({
-  link: [{ rel: 'canonical', href: pageUrl.value }],
-  script: isProfile.value
-    ? [{
-        type: 'application/ld+json',
-        innerHTML: JSON.stringify({
-          '@context': 'https://schema.org',
-          '@type': 'ProfilePage',
-          'url': pageUrl.value,
-          'mainEntity': {
-            '@type': 'Person',
-            '@id': `${pageUrl.value}#mile-ferenc`,
-            'name': page.value?.title,
-            'description': page.value?.description,
-            'url': pageUrl.value,
-            'sameAs': sameAs,
-          },
-        }).replace(/</g, '\\u003c'),
-      }]
-    : [],
-}))
+  usePageSeo({
+    kind,
+    path,
+    title: [title, title.includes(AUTHOR_NAME) ? undefined : AUTHOR_NAME, 'problemas.hu'].filter(Boolean).join(' | '),
+    heading: page.value.title,
+    description: page.value.tldr || page.value.seo?.description || page.value.description,
+    datePublished: page.value.date,
+  })
+}
 </script>
 
 <template>
   <UPage v-if="page" class="editorial-page">
-    <UPageHeader
-      :title="page.title"
-    >
-      <template v-if="publishedOn" #headline>
-        <time class="editorial-label" :datetime="page.date">{{ publishedOn }}</time>
-      </template>
-
-      <template #title>
+    <UPageHeader :title="page.title">
+      <template v-if="publishedOn || page.status" #headline>
         <div class="flex items-center gap-3 flex-wrap">
-          <span>{{ page.title }}</span>
+          <time v-if="publishedOn" class="editorial-label" :datetime="page.date">{{ publishedOn }}</time>
           <UBadge
             v-if="page.status"
             color="primary"

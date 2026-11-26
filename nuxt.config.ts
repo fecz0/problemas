@@ -40,11 +40,6 @@ export default defineNuxtConfig({
     },
   },
 
-  runtimeConfig: {
-    public: {
-      linkedinUrl: '',
-    },
-  },
   devtools: { enabled: true },
   compatibilityDate: '2026-11-26',
 
@@ -66,6 +61,8 @@ export default defineNuxtConfig({
   },
 
   experimental: {
+    // Render 404.html at build time, so it is readable without JavaScript
+    prerenderErrorPages: true,
     defaults: {
       nuxtLink: {
         trailingSlash: 'append',

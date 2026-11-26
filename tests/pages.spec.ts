@@ -142,7 +142,7 @@ test.describe('Site Details', () => {
     await page.goto('/')
 
     const contact = page.getByRole('region', { name: 'Kapcsolat' })
-    for (const name of ['Substack', 'Bluesky', 'GitHub']) {
+    for (const name of ['LinkedIn', 'Substack', 'Bluesky', 'GitHub']) {
       await expect(contact.getByRole('link', { name })).toBeVisible()
     }
   })
@@ -177,13 +177,53 @@ test.describe('Site Details', () => {
   })
 })
 
+test.describe('Client-side Navigation', () => {
+  test('keeps one canonical URL and one structured data block per page', async ({ page }) => {
+    await page.goto('/')
+    await page.waitForLoadState('networkidle')
+
+    for (const [name, path] of [['Ismerj meg', '/rolam/'], ['Szemléletem', '/szemleletem/']] as const) {
+      await page.getByRole('main').getByRole('link', { name }).first().click()
+
+      await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href', `https://problemas.hu${path}`)
+      const data = page.locator('script[type="application/ld+json"]')
+      await expect(data).toHaveCount(1)
+      // Text matchers ignore script contents, so read it directly
+      await expect.poll(() => data.textContent()).toContain(`https://problemas.hu${path}#webpage`)
+    }
+  })
+})
+
 test.describe('Error Handling', () => {
   test('shows 404 for non-existent page', async ({ page }) => {
+    const errors: string[] = []
+    page.on('pageerror', error => errors.push(error.message))
     await page.goto('/non-existent-page-12345')
+    await page.waitForLoadState('networkidle')
 
-    // Check error page displays
+    // Check error page displays and stays after the app has started
     await expect(page.getByText('404')).toBeVisible()
+    await page.getByRole('link', { name: 'Vissza a főoldalra' }).click()
+    await expect(page.getByRole('heading', { name: 'A problémák érdekelnek. Főleg azok, amiket már mindenki megszokott.' })).toBeVisible()
+    expect(errors).toEqual([])
   })
+})
+
+test.describe('Keyboard', () => {
+  for (const path of ['/', '/rolam/']) {
+    test(`can skip straight to the content of ${path}`, async ({ page }) => {
+      await page.goto(path)
+      await page.waitForLoadState('networkidle')
+      const skip = page.getByRole('link', { name: 'Ugrás a tartalomra' })
+
+      await expect(skip).not.toBeInViewport()
+      await page.keyboard.press('Tab')
+      await expect(skip).toBeFocused()
+      await expect(skip).toBeInViewport()
+      await page.keyboard.press('Enter')
+      await expect(page.getByRole('main')).toBeFocused()
+    })
+  }
 })
 
 test.describe('Dark Mode', () => {
