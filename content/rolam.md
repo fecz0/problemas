@@ -1,23 +1,18 @@
 ---
-title: Rólam
+title: Mile Ferenc
+description: Mile Ferenc technológiai vezető, aki rendszerekben gondolkodik, és a technológia, az emberek és a szervezetek kapcsolatával foglalkozik.
 ---
 
-Nem aktivista vagyok, és nem is influencer.  
-Fejlesztőként és technológiai vezetőként évek óta **összetett, nagy terhelésű rendszerekkel** dolgozom. Olyanokkal, ahol egy rossz döntés nem elméleti vita, hanem valódi káosz.
+Szoftverfejlesztőként kezdtem, ma technológiai vezetőként dolgozom. Fejlesztőcsapatokat vezettem, nagy forgalmú digitális termékeken dolgoztam, és vállalati rendszerek megújításával foglalkoztam.
 
-A Problémás.hu azért született, mert ugyanazt a mintát látom újra és újra a társadalmi rendszereinkben, mint a rosszul megtervezett szoftverekben:
-- túlterhelt szereplők,
-- átláthatatlan folyamatok,
-- tüneti kezelés a gyökérokok helyett,
-- és technológia, ami nem segít, hanem akadályoz.
+Egy lassú fejlesztési folyamat mögött néha a döntési jogkörök elosztása áll. Egy nehezen kezelhető digitális szolgáltatás pedig gyakran megmutatja, hogyan oszlik meg a munka azok között, akik működtetik. Engem az érdekel, hogyan lehet ezeket az összefüggéseket felismerni és változtatni rajtuk.
 
-Itt nem panaszkodni akarok, hanem **szétszedni és újra összerakni** problémákat.  
-Adatokkal, rendszerszintű gondolkodással, és nagyon földhözragadt kérdésekkel:
-- hol folyik el az energia?
-- mit lehetne automatizálni, egyszerűsíteni, kiváltani?
-- és mi az a *legkisebb* lépés, ami már valódi javulást hoz?
+## Ahogy dolgozom
 
-Az írásaim gyakran technológiai szemszögből közelítenek társadalmi témákhoz (például egészségügy, közigazgatás, digitális szolgáltatások), de a cél mindig ugyanaz:  
-**jobb működés, kevesebb felesleges szenvedés.**
+Először azt próbálom megérteni, mi tartja fenn a problémát. Utána olyan változtatást keresek, amelyet érdemes önmagában kipróbálni, és amelynek a hatását látni lehet a mindennapi működésben.
 
-Ha vitatkoznál, pontosítanál, vagy együtt gondolkodnál: erre valók a cikkek alatti felületek.  
+A [Szemléletem](/szemleletem) oldalon bővebben leírom, hogyan választok ilyen lépéseket, és hogyan használom a visszajelzéseket.
+
+## Miért problemas.hu?
+
+Azok a problémák érdekelnek a leginkább, amelyek annyira hétköznapivá váltak, hogy ritkán kérdezzük meg, miért működnek így. Itt gyűjtöm az ezekről szóló [írásaimat és elemzéseimet](/#gondolatok).

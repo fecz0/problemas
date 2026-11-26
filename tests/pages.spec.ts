@@ -7,23 +7,23 @@ test.describe('Home Page', () => {
     await page.goto(BASE_URL)
 
     // Check page title
-    await expect(page).toHaveTitle(/problemas\.hu/)
+    await expect(page).toHaveTitle(/Mile Ferenc/)
 
     // Check hero section
-    await expect(page.getByText('Problémák és működő megoldások')).toBeVisible()
+    await expect(page.getByRole('heading', { name: 'A problémák érdekelnek. Főleg azok, amiket már mindenki megszokott.' })).toBeVisible()
 
     // Check navigation exists (use header navigation to avoid duplicates)
     const header = page.locator('header')
-    await expect(header.getByRole('link', { name: 'Problémák' })).toBeVisible()
-    await expect(header.getByRole('link', { name: 'Szemléletem' })).toBeVisible()
+    await expect(header.getByRole('link', { name: 'Gondolatok' })).toBeVisible()
+    await expect(header.getByRole('link', { name: 'Kapcsolat' })).toBeVisible()
     await expect(header.getByRole('link', { name: 'Rólam' })).toBeVisible()
   })
 
-  test('displays problem cards section', async ({ page }) => {
+  test('links to the existing analysis from Gondolatok', async ({ page }) => {
     await page.goto(BASE_URL)
 
-    // Check that the problems section exists
-    await expect(page.getByText('Elemzett problémák')).toBeVisible()
+    const thoughts = page.getByRole('region', { name: 'Gondolatok' })
+    await expect(thoughts.getByRole('link', { name: /Ismétlődő eRecept/ })).toHaveAttribute('href', /\/problemak\/haziorvosi-recept-1\/?$/)
   })
 })
 
@@ -32,7 +32,7 @@ test.describe('Rólam (About) Page', () => {
     await page.goto(`${BASE_URL}/rolam`)
 
     // Check page loads with content
-    await expect(page).toHaveTitle(/problemas\.hu/)
+    await expect(page).toHaveTitle(/Mile Ferenc/)
 
     // Check main content area exists
     const mainContent = page.locator('main')
@@ -47,7 +47,7 @@ test.describe('Rólam (About) Page', () => {
 
     // Should be on home page
     await expect(page).toHaveURL(BASE_URL)
-    await expect(page.getByText('Problémák és működő megoldások')).toBeVisible()
+    await expect(page.getByRole('heading', { name: 'A problémák érdekelnek. Főleg azok, amiket már mindenki megszokott.' })).toBeVisible()
   })
 })
 
@@ -123,13 +123,20 @@ test.describe('Error Handling', () => {
 })
 
 test.describe('Dark Mode', () => {
-  test('color mode toggle exists', async ({ page }) => {
+  test('keeps the hero readable in both color modes on mobile', async ({ page }) => {
+    await page.setViewportSize({ width: 375, height: 812 })
+    await page.emulateMedia({ colorScheme: 'light' })
     await page.goto(BASE_URL)
 
-    // Check that a color mode button exists (it might be labeled differently)
-    // Look for any button that could be color mode toggle
-    const buttons = page.locator('button')
-    const buttonCount = await buttons.count()
-    expect(buttonCount).toBeGreaterThan(0)
+    await expect(page.locator('body')).toHaveCSS('background-color', 'rgb(242, 240, 233)')
+    await expect(page.locator('header').getByRole('button', { name: /dark mode/i })).toBeVisible()
+    await page.emulateMedia({ colorScheme: 'dark' })
+    await page.reload()
+    await expect(page.locator('body')).toHaveCSS('background-color', 'rgb(17, 20, 25)')
+    await expect(page.getByRole('heading', { level: 1 })).toBeVisible()
+    expect(await page.locator('body').evaluate(body => body.scrollWidth)).toBeLessThanOrEqual(375)
+
+    await page.getByRole('link', { name: 'Amivel foglalkozom' }).click()
+    await expect(page).toHaveURL(/#amivel-foglalkozom$/)
   })
 })

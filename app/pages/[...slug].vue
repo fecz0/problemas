@@ -4,7 +4,7 @@ const route = useRoute()
 // Normalize path by removing trailing slash for content lookup
 const normalizedPath = computed(() => route.path.replace(/\/$/, '') || '/')
 
-const { data: page } = await useAsyncData('page-' + normalizedPath.value, () => {
+const { data: page } = await useAsyncData(computed(() => 'page-' + normalizedPath.value), () => {
   return queryCollection('content').path(normalizedPath.value).first()
 })
 
@@ -19,8 +19,13 @@ const statusColors: Record<'Kutatás' | 'Javaslat' | 'Megvalósítás', 'warning
 }
 
 // Dynamic SEO meta tags
-const pageTitle = computed(() => page.value?.title ? `${page.value.title} | problemas.hu` : 'problemas.hu')
-const pageDescription = computed(() => page.value?.tldr || 'Társadalmi problémák elemzése és fokozatos megoldási javaslatok')
+const isProfile = computed(() => normalizedPath.value === '/rolam')
+const { linkedinUrl } = useRuntimeConfig().public
+const pageTitle = computed(() => {
+  const title = page.value?.title
+  return [title, isProfile.value ? undefined : 'Mile Ferenc', 'problemas.hu'].filter(Boolean).join(' | ')
+})
+const pageDescription = computed(() => page.value?.tldr || page.value?.description || 'Társadalmi problémák elemzése és fokozatos megoldási javaslatok')
 // Canonical URL with trailing slash (matching site.trailingSlash: true)
 const pageUrl = computed(() => {
   const path = normalizedPath.value
@@ -33,7 +38,7 @@ useSeoMeta({
   ogTitle: pageTitle,
   ogDescription: pageDescription,
   ogUrl: pageUrl,
-  ogType: 'article',
+  ogType: () => isProfile.value ? 'profile' : 'article',
   ogLocale: 'hu_HU',
   ogSiteName: 'problemas.hu',
   twitterCard: 'summary_large_image',
@@ -41,15 +46,31 @@ useSeoMeta({
   twitterDescription: pageDescription,
 })
 
-useHead({
-  link: [
-    { rel: 'canonical', href: pageUrl.value },
-  ],
-})
+useHead(() => ({
+  link: [{ rel: 'canonical', href: pageUrl.value }],
+  script: isProfile.value
+    ? [{
+        type: 'application/ld+json',
+        innerHTML: JSON.stringify({
+          '@context': 'https://schema.org',
+          '@type': 'ProfilePage',
+          'url': pageUrl.value,
+          'mainEntity': {
+            '@type': 'Person',
+            '@id': `${pageUrl.value}#mile-ferenc`,
+            'name': page.value?.title,
+            'description': page.value?.description,
+            'url': pageUrl.value,
+            'sameAs': linkedinUrl ? [linkedinUrl] : undefined,
+          },
+        }).replace(/</g, '\\u003c'),
+      }]
+    : [],
+}))
 </script>
 
 <template>
-  <UPage v-if="page">
+  <UPage v-if="page" :class="{ 'editorial-profile': isProfile }">
     <UPageHeader
       :title="page.title"
     >
@@ -77,6 +98,15 @@ useHead({
       <div class="prose dark:prose-invert max-w-none">
         <ContentRenderer :value="page" />
       </div>
+
+      <dl v-if="page.caseStudy" class="editorial-case">
+        <dt>Helyzet</dt>
+        <dd>{{ page.caseStudy.context }}</dd>
+        <dt>Szerepem</dt>
+        <dd>{{ page.caseStudy.role }}</dd>
+        <dt>Eredmény</dt>
+        <dd>{{ page.caseStudy.outcome }}</dd>
+      </dl>
 
       <DiscussionLinks
         :linkedin="page.linkedin"

@@ -9,6 +9,13 @@ export default defineNuxtConfig({
     '@nuxtjs/sitemap',
   ],
   css: ['~/assets/css/main.css'],
+  ui: { fonts: false },
+
+  runtimeConfig: {
+    public: {
+      linkedinUrl: '',
+    },
+  },
   devtools: { enabled: true },
   compatibilityDate: '2024-04-03',
 
@@ -20,7 +27,7 @@ export default defineNuxtConfig({
   ssr: true,
   nitro: {
     prerender: {
-      routes: ['/', '/404.html'],
+      routes: ['/', '/rolam/', '/szemleletem/', '/404.html'],
       crawlLinks: true,
       ignore: [
         '/.well-known/**',
@@ -59,7 +66,7 @@ export default defineNuxtConfig({
       },
       titleTemplate: '%s',
       meta: [
-        { name: 'author', content: 'problemas.hu' },
+        { name: 'author', content: 'Mile Ferenc' },
         { name: 'robots', content: 'index, follow' },
         { property: 'og:locale', content: 'hu_HU' },
         { property: 'og:site_name', content: 'problemas.hu' },
