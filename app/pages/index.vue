@@ -6,7 +6,6 @@ const { data: problems } = await useAsyncData('problems', () => queryCollection(
   .all())
 
 const home = computed(() => page.value?.home)
-const { profiles } = useAppConfig()
 
 // On-site analyses and external publications in one list, newest first
 const writings = computed(() => [
@@ -107,11 +106,7 @@ if (page.value) {
       <h2 id="kapcsolat-cim" class="editorial-label">{{ home.contact.heading }}</h2>
       <div>
         <p>{{ home.contact.description }}</p>
-        <ul class="editorial-contacts">
-          <li v-for="link in profiles" :key="link.url">
-            <NuxtLink class="editorial-link" :to="link.url" external>{{ link.label }} <span aria-hidden="true">↗</span></NuxtLink>
-          </li>
-        </ul>
+        <ProfileLinks />
       </div>
     </section>
   </div>

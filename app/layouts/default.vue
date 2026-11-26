@@ -46,6 +46,7 @@ const route = useRoute()
       <div>
         <p>&copy; {{ new Date().getFullYear() }} Mile Ferenc</p>
         <p>Az oldalon megjelenő gondolatok a saját szakmai véleményemet tükrözik.</p>
+        <p lang="en"><NuxtLink to="/en" hreflang="en">Profile in English</NuxtLink></p>
         <!-- The home page lists them right above, under contact -->
         <ul v-if="route.path !== '/'" aria-label="Profilok">
           <li v-for="link in profiles" :key="link.url">
