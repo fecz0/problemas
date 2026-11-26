@@ -1,16 +1,15 @@
 <script setup lang="ts">
 const navigation = [
-  { label: 'Problémák', icon: 'i-heroicons-document-magnifying-glass', to: '/' },
-  { label: 'Szemléletem', icon: 'i-heroicons-light-bulb', to: '/szemleletem' },
-  { label: 'Rólam', icon: 'i-heroicons-user', to: '/rolam' },
+  { label: 'Rólam', to: '/rolam' },
+  { label: 'Gondolatok', to: '/#gondolatok' },
+  { label: 'Kapcsolat', to: '/#kapcsolat' },
 ]
 </script>
 
 <template>
   <UHeader title="problemas.hu" to="/">
     <template #title>
-      <img src="/problemas-logo.png" alt="problemas.hu logo" class="h-6 w-auto">
-      <span>problemas.hu</span>
+      <span class="editorial-wordmark">problemas<span>.</span>hu</span>
     </template>
 
     <!-- Desktop navigation in default slot (center) - hidden on mobile -->
@@ -38,8 +37,8 @@ const navigation = [
 
   <UFooter>
     <template #left>
-      <p class="text-sm text-dimmed">
-        &copy; {{ new Date().getFullYear() }} problemas.hu
+      <p class="text-sm text-muted">
+        &copy; {{ new Date().getFullYear() }} Mile Ferenc
       </p>
     </template>
     <template #right>
