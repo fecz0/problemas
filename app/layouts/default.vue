@@ -1,8 +1,8 @@
 <script setup lang="ts">
 const navigation = [
   { label: 'Rólam', to: '/rolam' },
-  { label: 'Gondolatok', to: '/#gondolatok' },
-  { label: 'Kapcsolat', to: '/#kapcsolat' },
+  { label: 'Gondolatok', to: '/#gondolatok', exactHash: true },
+  { label: 'Kapcsolat', to: '/#kapcsolat', exactHash: true },
 ]
 </script>
 
@@ -13,7 +13,7 @@ const navigation = [
     </template>
 
     <!-- Desktop navigation in default slot (center) - hidden on mobile -->
-    <UNavigationMenu :items="navigation" class="hidden lg:flex" />
+    <UNavigationMenu :items="navigation" variant="link" class="hidden lg:flex" />
 
     <template #right>
       <UColorModeButton />
@@ -23,6 +23,7 @@ const navigation = [
     <template #body>
       <UNavigationMenu
         :items="navigation"
+        variant="link"
         orientation="vertical"
         class="-mx-2.5"
       />
