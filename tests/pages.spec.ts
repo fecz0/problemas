@@ -119,6 +119,26 @@ test.describe('Problem Article Page', () => {
   })
 })
 
+test.describe('Content Links', () => {
+  test('are underlined so they stand out from body text', async ({ page }) => {
+    await page.goto(`${BASE_URL}/rolam`)
+
+    const link = page.getByRole('main').getByRole('link', { name: 'Szemléletem' })
+    await expect(link).toHaveCSS('text-decoration-line', 'underline')
+    await expect(link).toHaveAttribute('href', '/szemleletem/')
+    await expect(link).not.toHaveAttribute('target', '_blank')
+  })
+
+  test('open external sources safely in a new tab', async ({ page }) => {
+    await page.goto(`${BASE_URL}/problemak/haziorvosi-recept-1`)
+
+    const source = page.getByRole('main').locator('a[href^="https://www.nhsbsa.nhs.uk/"]')
+    await expect(source).toHaveCSS('text-decoration-line', 'underline')
+    await expect(source).toHaveAttribute('target', '_blank')
+    await expect(source).toHaveAttribute('rel', 'noopener noreferrer')
+  })
+})
+
 test.describe('Error Handling', () => {
   test('shows 404 for non-existent page', async ({ page }) => {
     await page.goto(`${BASE_URL}/non-existent-page-12345`)
