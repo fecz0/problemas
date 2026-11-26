@@ -80,7 +80,7 @@ useHead({ link: [{ rel: 'canonical', href: 'https://problemas.hu/' }] })
           </li>
           <li v-for="publication in home.thoughts.publications" :key="publication.url">
             <NuxtLink class="editorial-link" :to="publication.url" external>{{ publication.title }} <span aria-hidden="true">↗</span></NuxtLink>
-            <p class="editorial-label">{{ publication.publisher }}</p>
+            <p>{{ publication.description }}</p>
           </li>
         </ul>
       </div>

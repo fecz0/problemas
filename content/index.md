@@ -32,6 +32,22 @@ home:
   thoughts:
     heading: Gondolatok
     description: Írások és elemzések technológiáról, szervezetekről és közös rendszereinkről.
+    publications:
+      - title: A visszafordíthatatlan döntések csapdája
+        description: Mi történik, ha egy döntés következményei hamarabb rögzülnek, mint hogy kiderülne, működik-e? Az iskolakezdési támogatás példáján a mérés, a visszacsatolás és a változtatás mozgásterét keresem.
+        url: https://fecz0.substack.com/p/a-visszafordithatatlan-dontesek-csapdaja
+      - title: Amikor a befektető az egyetlen ellenőr is
+        description: A Donut Lab történetén keresztül azt vizsgálom, mi történik, amikor technológiai ígéretekről azok döntenek, akik a kockázatot viselik, miközben hiányzik a független szakmai ellenőrzés.
+        url: https://fecz0.substack.com/p/amikor-a-befekteto-az-egyetlen-ellenor
+      - title: 'Az EU digitális önrendelkezési csomagja: a pénz nem elég, architektúra kell'
+        description: Mitől válhat egy digitális infrastruktúra önállóvá és ellenőrizhetővé? Nyílt szabványokról, hordozhatóságról és a beszállítói függőség csökkentésének technikai feltételeiről írok.
+        url: https://fecz0.substack.com/p/az-eu-digitalis-onrendelkezesi-csomagja
+      - title: A NIS2-audit nemcsak piaci kérdés, hanem állami digitális szolgáltatás
+        description: Hogyan állhat össze a kiberbiztonsági megfelelés folyamatos, követhető munkafolyamattá? Egy közös platform lehetőségei a kontrollkatalógustól a bizonyítéktáron át a kapacitások láthatóvá tételéig.
+        url: https://fecz0.substack.com/p/a-nis2-audit-nemcsak-piaci-kerdes
+      - title: Az okosmérő nem spórolási trükk, hanem a digitális áramhálózat alapköve
+        description: Az okosmérők adataiból hogyan lesz használható hálózati tudás? Az adatmodell, az átjárhatóság és a visszacsatolás szerepe az energiahálózat fejlesztésében.
+        url: https://fecz0.substack.com/p/az-okosmero-nem-sporolasi-trukk-hanem
   contact:
     heading: Kapcsolat
     description: Ha technológiáról, szervezetekről vagy egy megszokott működés újragondolásáról beszélgetnél, keress LinkedInen.
