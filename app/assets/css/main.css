@@ -18,6 +18,7 @@
   --editorial-muted: #47524f;
   --editorial-line: #c3c7bc;
   --editorial-accent: #3e5216;
+  --ui-primary: var(--editorial-accent);
 }
 
 .dark {
@@ -29,6 +30,7 @@
   --editorial-muted: #b2b9bd;
   --editorial-line: #3a424b;
   --editorial-accent: #e2f36b;
+  --ui-primary: var(--editorial-accent);
 }
 
 .editorial-wordmark,
