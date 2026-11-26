@@ -12,10 +12,6 @@ if (!page.value) {
   throw createError({ statusCode: 404, statusMessage: 'Page not found', fatal: true })
 }
 
-const publishedOn = computed(() => page.value?.date
-  ? new Intl.DateTimeFormat('hu-HU', { dateStyle: 'long', timeZone: 'UTC' }).format(new Date(page.value.date))
-  : undefined)
-
 if (page.value) {
   const path = normalizedPath.value
   const kind = path === '/rolam' ? 'profile' : path.startsWith('/problemak/') ? 'article' : 'page'
@@ -28,6 +24,7 @@ if (page.value) {
     heading: page.value.title,
     description: page.value.tldr || page.value.seo?.description || page.value.description,
     datePublished: page.value.date,
+    dateModified: page.value.updated,
   })
 }
 </script>
@@ -35,9 +32,13 @@ if (page.value) {
 <template>
   <UPage v-if="page" class="editorial-page">
     <UPageHeader :title="page.title">
-      <template v-if="publishedOn || page.status" #headline>
-        <div class="flex items-center gap-3 flex-wrap">
-          <time v-if="publishedOn" class="editorial-label" :datetime="page.date">{{ publishedOn }}</time>
+      <template v-if="page.date" #headline>
+        <div class="flex items-center gap-x-4 gap-y-2 flex-wrap">
+          <NuxtLink class="editorial-label underline underline-offset-4" to="/rolam">{{ AUTHOR_NAME }}</NuxtLink>
+          <time class="editorial-label" :datetime="page.date">{{ formatDate(page.date) }}</time>
+          <span v-if="page.updated" class="editorial-label">
+            Frissítve: <time :datetime="page.updated">{{ formatDate(page.updated) }}</time>
+          </span>
           <UBadge
             v-if="page.status"
             color="primary"

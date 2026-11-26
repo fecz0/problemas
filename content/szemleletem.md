@@ -5,6 +5,13 @@ seo:
 description: A cél nem az, hogy „mindent megjavítsunk”, hanem hogy kevesebb energia vesszen el, kevesebb ember égjen ki, és a rendszer egy kicsivel jobban működjön, mint tegnap.
 ---
 
+## A problémamegoldási ciklus
+
+Így foglalom össze, ahogyan egy problémához közelítek. Az első megoldás után a visszajelzések alapján újraindul a kör.
+
+::problem-cycle
+::
+
 ## A fokozatos megközelítés filozófiája
 
 A komplex társadalmi problémák ritkán oldhatók meg egyetlen nagy, látványos lépéssel.  
@@ -57,9 +64,6 @@ A bizonytalanság kimondása nem gyengeség, hanem a felelős gondolkodás rész
 
 ## Mit NEM csinál ez az oldal
 
-- **Nem kiabálja, hogy „minden sz*r”.**  
-  Lehet, hogy igaz, de ettől még nem leszünk okosabbak. Itt az érdekes rész az, *miért* az, és mit lehet vele kezdeni.
-
 - **Nem hisz a varázsmegoldásokban.**  
   Ha egy probléma „egy törvénymódosítással”, „egy appal” vagy „egy jó vezetővel” megoldható lenne, már nem lenne probléma.
 
@@ -74,8 +78,5 @@ A bizonytalanság kimondása nem gyengeség, hanem a felelős gondolkodás rész
 
 - **Nem tesz úgy, mintha biztos lenne a válasz.**  
   Aki teljes bizonyosságot ígér komplex kérdésekben, az vagy nem érti a problémát, vagy eladni akar valamit.
-
-- **Nem zárja le a vitát.**  
-  Ha egy írás után nincs mit vitatni, akkor valószínűleg nem szólt semmiről.
 
 **Az oldalam [nyílt forráskódú](https://github.com/fecz0/problemas): ha valamivel nem értesz egyet, nyugodtan nyiss issue-t vagy pull requestet, vagy írj az egyik elérhetőségemen. A vita és a javítás a folyamat része.**
