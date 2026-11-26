@@ -1,52 +1,9 @@
 import { describe, it, expect } from 'vitest'
 import { mountSuspended } from '@nuxt/test-utils/runtime'
-import ProblemCard from '~/components/ProblemCard.vue'
 import TldrBlock from '~/components/TldrBlock.vue'
 import DiscussionLinks from '~/components/DiscussionLinks.vue'
 import StepItem from '~/components/StepItem.vue'
 import IncrementalSteps from '~/components/IncrementalSteps.vue'
-
-describe('ProblemCard', () => {
-  it('renders title and description', async () => {
-    const wrapper = await mountSuspended(ProblemCard, {
-      props: {
-        title: 'Test Problem',
-        description: 'Test description',
-        to: '/test-path',
-      },
-    })
-
-    expect(wrapper.text()).toContain('Test Problem')
-    expect(wrapper.text()).toContain('Test description')
-  })
-
-  it('renders status badge when provided', async () => {
-    const wrapper = await mountSuspended(ProblemCard, {
-      props: {
-        title: 'Test Problem',
-        description: 'Test description',
-        to: '/test-path',
-        status: 'Kutatás',
-      },
-    })
-
-    expect(wrapper.text()).toContain('Kutatás')
-  })
-
-  it('does not render status badge when not provided', async () => {
-    const wrapper = await mountSuspended(ProblemCard, {
-      props: {
-        title: 'Test Problem',
-        description: 'Test description',
-        to: '/test-path',
-      },
-    })
-
-    expect(wrapper.text()).not.toContain('Kutatás')
-    expect(wrapper.text()).not.toContain('Javaslat')
-    expect(wrapper.text()).not.toContain('Megvalósítás')
-  })
-})
 
 describe('TldrBlock', () => {
   it('renders the TL;DR text', async () => {

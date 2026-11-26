@@ -1,5 +1,6 @@
 ---
 title: Szemléletem
+description: A cél nem az, hogy „mindent megjavítsunk”, hanem hogy kevesebb energia vesszen el, kevesebb ember égjen ki, és a rendszer egy kicsivel jobban működjön, mint tegnap.
 ---
 
 ## A fokozatos megközelítés filozófiája
@@ -75,4 +76,4 @@ A bizonytalanság kimondása nem gyengeség, hanem a felelős gondolkodás rész
 - **Nem zárja le a vitát.**  
   Ha egy írás után nincs mit vitatni, akkor valószínűleg nem szólt semmiről.
 
-**Az oldalam nyílt forráskódú: ha valamivel nem értesz egyet, nyugodtan nyiss issue-t vagy pull requestet, vagy írj az egyik elérhetőségemen. A vita és a javítás a folyamat része.**
+**Az oldalam [nyílt forráskódú](https://github.com/fecz0/problemas): ha valamivel nem értesz egyet, nyugodtan nyiss issue-t vagy pull requestet, vagy írj az egyik elérhetőségemen. A vita és a javítás a folyamat része.**

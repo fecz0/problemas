@@ -2,16 +2,33 @@
 export default defineNuxtConfig({
   modules: [
     '@nuxt/content',
-    '@nuxt/a11y',
     '@nuxt/eslint',
     '@nuxt/test-utils',
     '@nuxt/ui',
     '@nuxtjs/sitemap',
   ],
   css: ['~/assets/css/main.css'],
-  ui: { fonts: false },
+
+  // Fonts and icons are bundled at build time, so visitors make no third-party requests
+  fonts: {
+    defaults: {
+      subsets: ['latin', 'latin-ext'],
+      styles: ['normal'],
+    },
+    families: [
+      { name: 'Inter', provider: 'google', weights: [400, 500, 600, 700] },
+      { name: 'Space Grotesk', provider: 'google', weights: [500, 700] },
+      { name: 'IBM Plex Mono', provider: 'google', weights: [400, 600] },
+    ],
+  },
+  icon: {
+    clientBundle: { scan: true },
+    fallbackToApi: false,
+  },
 
   content: {
+    // Node's built-in SQLite, no native dependency to compile
+    experimental: { sqliteConnector: 'native' },
     build: {
       markdown: {
         rehypePlugins: {
@@ -29,14 +46,9 @@ export default defineNuxtConfig({
     },
   },
   devtools: { enabled: true },
-  compatibilityDate: '2024-04-03',
-
-  typescript: {
-    strict: true,
-  },
+  compatibilityDate: '2026-11-26',
 
   // SSG configuration
-  ssr: true,
   nitro: {
     prerender: {
       routes: ['/', '/rolam/', '/szemleletem/', '/404.html'],
@@ -46,11 +58,6 @@ export default defineNuxtConfig({
         '/_nuxt/**',
       ],
     },
-  },
-
-  // Route rules - ignore special paths from catch-all
-  routeRules: {
-    '/.well-known/**': { prerender: false },
   },
 
   site: {
@@ -76,15 +83,13 @@ export default defineNuxtConfig({
       htmlAttrs: {
         lang: 'hu',
       },
-      titleTemplate: '%s',
       meta: [
         { name: 'author', content: 'Mile Ferenc' },
-        { name: 'robots', content: 'index, follow' },
         { property: 'og:locale', content: 'hu_HU' },
         { property: 'og:site_name', content: 'problemas.hu' },
         { property: 'og:image', content: 'https://problemas.hu/problemas-background.png' },
         { property: 'og:image:width', content: '1200' },
-        { property: 'og:image:height', content: '630' },
+        { property: 'og:image:height', content: '634' },
         { name: 'twitter:card', content: 'summary_large_image' },
         { name: 'twitter:image', content: 'https://problemas.hu/problemas-background.png' },
         { name: 'apple-mobile-web-app-title', content: 'Problémás' },

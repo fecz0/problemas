@@ -1,5 +1,4 @@
 allowBuilds:
-  better-sqlite3: true
   esbuild: true
   unrs-resolver: true
   vue-demi: true
@@ -15,3 +14,7 @@ overrides:
   '@vue/reactivity': 3.5.46
   '@vue/shared': 3.5.46
   '@vue/server-renderer': 3.5.46
+
+permissions:
+  '@nuxtjs/sitemap':
+    skills: false

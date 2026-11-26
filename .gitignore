@@ -35,3 +35,6 @@ coverage/
 # Playwright
 playwright-report/
 test-results/
+
+# Personal agent settings
+.claude/settings.local.json

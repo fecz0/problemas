@@ -1,120 +1,48 @@
 # problemas.hu
 
-A content-driven web application for analyzing complex societal and technological problems with incremental, practical solutions. Built with Nuxt 4 and designed for the Hungarian audience.
+[Mile Ferenc](https://problemas.hu/rolam/)'s personal website, in Hungarian: an introduction, a way of thinking about problems, and writing on technology, organizations and shared systems.
 
-## Tech Stack
-
-- **Framework:** [Nuxt 4](https://nuxt.com/) with Vue 3
-- **Content:** [@nuxt/content](https://content.nuxt.com/) for markdown-based pages
-- **UI:** [@nuxt/ui](https://ui.nuxt.com/) v4 with Tailwind CSS 4
-- **Language:** TypeScript (strict mode)
-- **Testing:** Vitest (unit/integration) + Playwright (e2e)
-- **SEO:** @nuxtjs/sitemap, @nuxt/a11y for accessibility
-
-## Prerequisites
-
-- Node.js 24.x or later
-- [pnpm](https://pnpm.io/)
-
-## Installation
-
-```bash
-pnpm install
-```
+It is a static site built with [Nuxt 4](https://nuxt.com/), [Nuxt Content](https://content.nuxt.com/) and [Nuxt UI](https://ui.nuxt.com/), deployed to GitHub Pages.
 
 ## Development
 
-Start the development server on `http://localhost:3000`:
+You need the Node.js version in `.node-version` and the pnpm version in `package.json`.
 
 ```bash
-pnpm dev
+pnpm install
+pnpm dev          # http://localhost:3000
+pnpm generate     # static site in .output/public
+pnpm preview      # preview the build
 ```
 
-## Build
-
-Build the application for production (static site generation):
+## Checks
 
 ```bash
-pnpm build
-```
-
-Preview the production build locally:
-
-```bash
-pnpm preview
-```
-
-## Testing
-
-```bash
-# Run all tests
-pnpm test
-
-# Run unit tests only
-pnpm test:unit
-
-# Run Nuxt component tests only
-pnpm test:nuxt
-
-# Run tests in watch mode
-pnpm test:watch
-
-# Run tests with coverage report
-pnpm test:coverage
-
-# Run Playwright e2e tests
-pnpm test:e2e
-
-# Run e2e tests with Playwright UI
-pnpm test:e2e:ui
-```
-
-## Project Structure
-
-```
-app/
-  components/       # Vue components
-  layouts/          # Page layouts
-  pages/            # Route pages
-  assets/css/       # Global styles
-  error.vue         # Error page
-  app.vue           # Root component
-content/            # Markdown content files
-  problemak/        # Problem analysis articles
-test/
-  unit/             # Unit tests (Node environment)
-  nuxt/             # Component tests (Nuxt environment)
-tests/              # Playwright e2e tests
-public/             # Static assets
-```
-
-## Content System
-
-Pages are driven by markdown files in the `content/` directory. Each article supports the following frontmatter:
-
-```yaml
-title: Article Title
-date: '2025-01-01'
-tldr: Short summary for readers
-status: Kutatas | Javaslat | Megvalositas
-linkedin: https://linkedin.com/...
-bluesky: https://bsky.app/...
-```
-
-## Linting
-
-```bash
-# Lint all files
 pnpm exec eslint .
-
-# Lint and auto-fix
-pnpm exec eslint --fix .
+pnpm exec nuxi typecheck
+pnpm exec vitest run                              # component tests
+pnpm exec playwright install chromium --only-shell  # once
+pnpm test:e2e                                     # builds the site, then tests it
 ```
+
+## Content
+
+Pages are Markdown files in `content/`:
+
+- `index.md`: the home page, including the list of external publications
+- `rolam.md`, `szemleletem.md`: standalone pages
+- `problemak/`: on-site analyses, listed on the home page newest first
+
+The available frontmatter fields are defined in `content.config.ts`.
 
 ## Deployment
 
-The build output is a fully static site in `.output/public/`, deployed to GitHub Pages
+Merging to `main` runs the checks and, if they pass, deploys the site. Dependabot patch and minor updates are merged and deployed the same way.
+
+## Contributing
+
+Disagreements and corrections are welcome as issues or pull requests. Guidance for coding agents is in [AGENTS.md](AGENTS.md).
 
 ## License
 
-MIT License - see [LICENSE](LICENSE) for details.
+MIT, see [LICENSE](LICENSE).

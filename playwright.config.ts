@@ -9,15 +9,19 @@ export default defineConfig({
   reporter: 'html',
   timeout: 30000,
   use: {
-    baseURL: process.env.BASE_URL || 'http://localhost:3000',
+    baseURL: process.env.BASE_URL || 'http://localhost:4173',
     trace: 'on-first-retry',
   },
-  webServer: {
-    command: 'pnpm run dev',
-    url: 'http://localhost:3000',
-    reuseExistingServer: !process.env.CI,
-    timeout: 120000,
-  },
+  // Tests run against the generated static site, which is what gets deployed.
+  // Set BASE_URL to test an already running site instead.
+  webServer: process.env.BASE_URL
+    ? undefined
+    : {
+        command: 'pnpm run generate && node scripts/serve-static.mjs',
+        url: 'http://localhost:4173',
+        reuseExistingServer: false,
+        timeout: 180000,
+      },
   projects: [
     {
       name: 'chromium',
