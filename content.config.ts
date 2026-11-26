@@ -37,7 +37,7 @@ export default defineContentConfig({
               url: z.string().url(),
             })).optional(),
           }),
-          contact: headingAndDescription.extend({ unavailable: z.string() }),
+          contact: headingAndDescription,
         }).optional(),
         caseStudy: z.object({
           context: z.string(),

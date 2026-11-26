@@ -7,6 +7,8 @@ const navigation = [
 </script>
 
 <template>
+  <a class="skip-link" href="#tartalom">Ugrás a tartalomra</a>
+
   <UHeader title="problemas.hu" to="/">
     <template #title>
       <span class="editorial-wordmark">problemas<span>.</span>hu</span>
@@ -30,7 +32,7 @@ const navigation = [
     </template>
   </UHeader>
 
-  <UMain>
+  <UMain id="tartalom" tabindex="-1">
     <UContainer>
       <slot />
     </UContainer>

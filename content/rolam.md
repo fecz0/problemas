@@ -1,5 +1,7 @@
 ---
 title: Mile Ferenc
+seo:
+  title: Mile Ferenc – szakmai háttér
 description: Mile Ferenc technológiai vezető, aki rendszerekben gondolkodik, és a technológia, az emberek és a szervezetek kapcsolatával foglalkozik.
 ---
 

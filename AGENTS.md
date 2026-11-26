@@ -25,10 +25,11 @@ Before calling a change done, run lint, typecheck, vitest and e2e; run `pnpm gen
 ## Layout
 
 - `content/`: Markdown pages. `index.md` holds the home page as frontmatter; `problemak/` holds on-site analyses. Schema: `content.config.ts`.
-- `app/pages/index.vue` renders the home page, `app/pages/[...slug].vue` every other page, including SEO meta and structured data.
+- `app/pages/index.vue` renders the home page, `app/pages/[...slug].vue` every other page.
+- SEO: pages call `app/composables/usePageSeo.ts` (meta, canonical, JSON-LD); the schema.org graph is built in `app/utils/structuredData.ts`. Public profiles live in `app/app.config.ts`.
 - `app/components/`: `IncrementalSteps` and `StepItem` are used from Markdown (MDC).
 - `app/assets/css/main.css`: fonts, color tokens and the `editorial-*` styles. `app/app.config.ts`: Nuxt UI theme.
-- `test/nuxt/`: Vitest component tests. `tests/`: Playwright, served by `scripts/serve-static.mjs`.
+- `test/nuxt/`: Vitest component tests. `tests/`: Playwright, served by `scripts/serve-static.mjs`; `tests/static.spec.ts` checks the generated HTML without JavaScript.
 
 ## Content and design rules
 

@@ -1,6 +1,6 @@
 ---
 title: Mile Ferenc – Technológia, emberek, rendszerek
-description: Mile Ferenc személyes szakmai oldala. Rendszerekben gondolkodó problémamegoldás a technológia, a szervezetek és az automatizáció területén.
+description: Mile Ferenc személyes szakmai oldala. Technológiai vezetés, mesterséges intelligencia, szervezeti működés és komplex problémák megoldása.
 home:
   hero:
     eyebrow: MILE FERENC / TECHNOLÓGIA · EMBEREK · RENDSZEREK
@@ -51,5 +51,4 @@ home:
   contact:
     heading: Kapcsolat
     description: Ha technológiáról, szervezetekről vagy egy megszokott működés újragondolásáról beszélgetnél, keress LinkedInen.
-    unavailable: A LinkedIn-profil hivatkozása hamarosan itt lesz elérhető.
 ---

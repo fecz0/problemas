@@ -1,6 +1,7 @@
 export default defineAppConfig({
-  // Public profiles besides LinkedIn, which comes from NUXT_PUBLIC_LINKEDIN_URL
+  // Public profiles, shown under contact and listed as `sameAs` in structured data
   profiles: [
+    { label: 'LinkedIn', url: 'https://www.linkedin.com/in/ferenc-mile-65038446/' },
     { label: 'Substack', url: 'https://fecz0.substack.com' },
     { label: 'Bluesky', url: 'https://bsky.app/profile/fecz0.bsky.social' },
     { label: 'GitHub', url: 'https://github.com/fecz0' },

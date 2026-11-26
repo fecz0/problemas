@@ -6,25 +6,18 @@ const { data: problems } = await useAsyncData('problems', () => queryCollection(
   .all())
 
 const home = computed(() => page.value?.home)
-const { linkedinUrl } = useRuntimeConfig().public
 const { profiles } = useAppConfig()
-const contactLinks = [
-  ...(linkedinUrl ? [{ label: 'LinkedIn', url: linkedinUrl }] : []),
-  ...profiles,
-]
 
-useSeoMeta({
-  title: () => page.value?.title,
-  description: () => page.value?.description,
-  ogTitle: () => page.value?.title,
-  ogDescription: () => page.value?.description,
-  ogUrl: 'https://problemas.hu/',
-  ogType: 'website',
-  twitterTitle: () => page.value?.title,
-  twitterDescription: () => page.value?.description,
-})
-
-useHead({ link: [{ rel: 'canonical', href: 'https://problemas.hu/' }] })
+if (page.value) {
+  const title = page.value.seo?.title || page.value.title
+  usePageSeo({
+    kind: 'home',
+    path: '/',
+    title,
+    heading: page.value.title,
+    description: page.value.seo?.description || page.value.description,
+  })
+}
 </script>
 
 <template>
@@ -94,9 +87,9 @@ useHead({ link: [{ rel: 'canonical', href: 'https://problemas.hu/' }] })
     <section id="kapcsolat" class="editorial-section" aria-labelledby="kapcsolat-cim">
       <h2 id="kapcsolat-cim" class="editorial-label">{{ home.contact.heading }}</h2>
       <div>
-        <p>{{ linkedinUrl ? home.contact.description : home.contact.unavailable }}</p>
+        <p>{{ home.contact.description }}</p>
         <ul class="editorial-contacts">
-          <li v-for="link in contactLinks" :key="link.url">
+          <li v-for="link in profiles" :key="link.url">
             <NuxtLink class="editorial-link" :to="link.url" external>{{ link.label }} <span aria-hidden="true">↗</span></NuxtLink>
           </li>
         </ul>

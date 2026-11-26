@@ -6,8 +6,6 @@ const props = defineProps<{
   error: NuxtError
 }>()
 
-const handleError = () => clearError({ redirect: '/' })
-
 useSeoMeta({
   title: `${props.error.statusCode} - Hiba | problemas.hu`,
   description: 'A keresett oldal nem található vagy hiba történt.',
@@ -30,7 +28,8 @@ useSeoMeta({
             label="Vissza a főoldalra"
             color="primary"
             size="lg"
-            @click="handleError"
+            to="/"
+            external
           />
         </div>
       </UContainer>
