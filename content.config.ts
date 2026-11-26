@@ -32,7 +32,8 @@ export default defineContentConfig({
           thoughts: headingAndDescription.extend({
             publications: z.array(z.object({
               title: z.string(),
-              publisher: z.string(),
+              description: z.string(),
+              publisher: z.string().optional(),
               url: z.string().url(),
             })).optional(),
           }),

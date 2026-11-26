@@ -19,11 +19,17 @@ test.describe('Home Page', () => {
     await expect(header.getByRole('link', { name: 'Rólam' })).toBeVisible()
   })
 
-  test('links to the existing analysis from Gondolatok', async ({ page }) => {
+  test('lists five Substack articles below the existing analysis', async ({ page }) => {
     await page.goto(BASE_URL)
 
     const thoughts = page.getByRole('region', { name: 'Gondolatok' })
-    await expect(thoughts.getByRole('link', { name: /Ismétlődő eRecept/ })).toHaveAttribute('href', /\/problemak\/haziorvosi-recept-1\/?$/)
+    await expect(thoughts.getByRole('link').first()).toHaveAttribute('href', /\/problemak\/haziorvosi-recept-1\/?$/)
+    const publications = thoughts.locator('li').filter({ has: page.locator('a[href^="https://fecz0.substack.com/p/"]') })
+    await expect(publications).toHaveCount(5)
+    for (const publication of await publications.all()) {
+      await expect(publication.getByRole('link')).toBeVisible()
+      await expect(publication.locator('p')).not.toBeEmpty()
+    }
   })
 })
 
