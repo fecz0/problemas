@@ -70,10 +70,10 @@ test.describe('Static HTML', () => {
     await page.goto('/')
     await expect(page.getByRole('heading', { level: 1, name: 'Mile Ferenc' })).toBeVisible()
     await expect(page.getByText('Technológiai vezetőként rendszereket, termékeket és csapatokat építek.')).toBeVisible()
-    await expect(page.getByRole('heading', { name: 'Megérteni' })).toBeVisible()
+    await expect(page.getByRole('heading', { name: 'Emberek és szervezetek' })).toBeVisible()
     expect((await graph(page)).find(node => node['@type'] === 'Person')).toMatchObject({
       jobTitle: 'Head of Development',
-      knowsAbout: expect.arrayContaining(['Technológia', 'Engineering leadership']),
+      knowsAbout: ['Technológia', 'Emberek és szervezetek', 'AI és automatizáció', 'Közös rendszereink'],
     })
 
     await page.goto('/rolam/')

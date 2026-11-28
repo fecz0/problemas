@@ -5,6 +5,14 @@ const headingAndDescription = z.object({
   description: z.string(),
 })
 
+const publication = z.object({
+  title: z.string(),
+  url: z.string().url(),
+  date: z.string(),
+  platform: z.string(),
+  language: z.string(),
+})
+
 const labelledSection = z.object({
   label: z.string(),
   heading: z.string(),
@@ -25,7 +33,6 @@ export default defineContentConfig({
             claim: z.string(),
             description: z.string(),
             aboutLabel: z.string(),
-            outlookLabel: z.string(),
             portrait: z.object({ src: z.string(), alt: z.string() }).optional(),
           }),
           outlook: labelledSection,
@@ -34,25 +41,29 @@ export default defineContentConfig({
             items: z.array(z.object({
               title: z.string(),
               description: z.string(),
-              themes: z.array(z.string()),
             })),
           }),
           experience: labelledSection,
-          thoughts: headingAndDescription.extend({
-            publications: z.array(z.object({
-              title: z.string(),
+          thoughts: z.object({
+            heading: z.string(),
+            publications: z.array(publication.extend({
               description: z.string(),
-              url: z.string().url(),
-              date: z.string(),
-              platform: z.string(),
-              language: z.string(),
               topics: z.array(z.string()),
             })),
           }),
           contact: headingAndDescription,
         }).optional(),
-        /** Short line above the page title */
-        headline: z.string().optional(),
+        /** The English profile */
+        english: z.object({
+          hero: z.object({
+            name: z.string(),
+            tagline: z.string(),
+            claim: z.string(),
+            description: z.string(),
+          }),
+          writing: headingAndDescription.extend({ publications: z.array(publication) }),
+          contact: headingAndDescription,
+        }).optional(),
         caseStudy: z.object({
           context: z.string(),
           role: z.string(),
@@ -68,16 +79,6 @@ export default defineContentConfig({
       }),
     }),
     // Shared by the home page and the Markdown pages
-    method: defineCollection({
-      type: 'data',
-      source: 'data/method.yml',
-      schema: z.object({
-        title: z.string(),
-        center: z.string(),
-        return: z.string(),
-        steps: z.array(z.object({ name: z.string(), description: z.string() })),
-      }),
-    }),
     experience: defineCollection({
       type: 'data',
       source: 'data/experience.yml',

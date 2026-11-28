@@ -16,7 +16,7 @@ The text is published under the author's own name. Write in Hungarian, keep the 
 
 ## 2a. External publication
 
-Add an item to `home.thoughts.publications` in `content/index.md`. The home page merges these with the on-site analyses and sorts everything by `date`, newest first.
+Add an item to `home.thoughts.publications` in `content/index.md`. The home page merges these with the on-site analyses and sorts everything by `date`, newest first. The English profile (`content/en.md`) lists a hand-picked selection; change it only when asked.
 
 ```yaml
 - title: A cím pontosan úgy, ahogy a forrásnál szerepel

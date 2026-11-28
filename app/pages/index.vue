@@ -28,7 +28,7 @@ if (page.value) {
     title,
     heading: page.value.title,
     description: page.value.seo?.description || page.value.description,
-    knowsAbout: page.value.home?.topics.items.flatMap(topic => [topic.title, ...topic.themes]),
+    knowsAbout: page.value.home?.topics.items.map(topic => topic.title),
   })
 }
 </script>
@@ -43,7 +43,6 @@ if (page.value) {
         <p class="hero-intro">{{ home.hero.description }}</p>
         <div class="hero-actions">
           <NuxtLink class="editorial-button" to="/rolam">{{ home.hero.aboutLabel }} <span aria-hidden="true">→</span></NuxtLink>
-          <a class="editorial-link" href="#szemlelet">{{ home.hero.outlookLabel }} <span aria-hidden="true">↓</span></a>
         </div>
       </div>
       <img
@@ -61,11 +60,10 @@ if (page.value) {
       <div>
         <h2 id="szemlelet-cim">{{ home.outlook.heading }}</h2>
         <p v-for="paragraph in home.outlook.paragraphs" :key="paragraph">{{ paragraph }}</p>
+        <p>
+          <NuxtLink class="editorial-link" to="/szemleletem">{{ home.outlook.linkLabel }} <span aria-hidden="true">→</span></NuxtLink>
+        </p>
       </div>
-      <ProblemCycle class="editorial-wide" />
-      <p class="editorial-aside">
-        <NuxtLink class="editorial-link" to="/szemleletem">{{ home.outlook.linkLabel }} <span aria-hidden="true">→</span></NuxtLink>
-      </p>
     </section>
 
     <section id="amivel-foglalkozom" class="editorial-section" aria-labelledby="temak-cim">
@@ -74,10 +72,7 @@ if (page.value) {
         <li v-for="(topic, index) in home.topics.items" :key="topic.title">
           <span class="editorial-number" aria-hidden="true">{{ String(index + 1).padStart(2, '0') }}</span>
           <h3>{{ topic.title }}</h3>
-          <div>
-            <p>{{ topic.description }}</p>
-            <p class="editorial-label">{{ topic.themes.join(' · ') }}</p>
-          </div>
+          <p>{{ topic.description }}</p>
         </li>
       </ol>
     </section>
@@ -96,10 +91,7 @@ if (page.value) {
 
     <section id="gondolatok" class="editorial-section" aria-labelledby="gondolatok-cim">
       <h2 id="gondolatok-cim" class="editorial-label">{{ home.thoughts.heading }}</h2>
-      <div>
-        <p>{{ home.thoughts.description }}</p>
-        <PublicationList :items="writings" />
-      </div>
+      <PublicationList :items="writings" />
     </section>
 
     <section id="kapcsolat" class="editorial-section" aria-labelledby="kapcsolat-cim">

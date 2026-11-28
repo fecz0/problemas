@@ -1,8 +1,8 @@
-# Newest first. Employers are deliberately not named.
+# Newest first. Employers and company sizes are deliberately left out.
 facts:
   - period: Ma
-    text: Head of Development egy körülbelül 20 000 fős nagyvállalatnál
+    text: Head of Development egy nagyvállalatnál
   - period: Előtte
-    text: Tanácsadó 1000 fő feletti vállalatoknál, főként a légiközlekedésben
+    text: Tanácsadó nagyvállalatoknál, főként a légiközlekedésben
   - period: Korábban
-    text: Több mint tíz év alkalmazottként egy 200 fő feletti cégnél, technológiai vezetőként is
+    text: Több mint tíz év alkalmazottként egy cégnél, technológiai vezetőként is
