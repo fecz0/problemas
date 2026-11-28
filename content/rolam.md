@@ -2,7 +2,7 @@
 title: Mile Ferenc
 seo:
   title: Mile Ferenc – szakmai háttér
-description: Mile Ferenc technológiai vezető, aki rendszerekben gondolkodik, és a technológia, az emberek és a szervezetek kapcsolatával foglalkozik.
+description: 'Mile Ferenc szakmai háttere: szoftverfejlesztés, technológiai vezetés, tanácsadás főként a légiközlekedésben, ma pedig Head of Development szerep.'
 ---
 
 ::experience-facts
@@ -10,24 +10,12 @@ description: Mile Ferenc technológiai vezető, aki rendszerekben gondolkodik, �
 
 ## Szoftverfejlesztőként kezdtem
 
-Először a technológiai problémák megértése érdekelt. Fejlesztettem, architektúrával foglalkoztam, és működő digitális termékeket építettem.
+Fejlesztettem, architektúrával foglalkoztam, és működő digitális termékeket építettem. Később nemzetközi termékeken és nagy forgalmú rendszereken dolgoztam. Az infrastruktúra, a skálázás és az egymásra épülő függőségek mellett egyre többet számított, hogyan dolgoznak együtt a fejlesztők.
 
-## A rendszerek egyre nagyobbak lettek
+## A technológiától a szervezetekig
 
-Nemzetközi digitális termékeken és nagy forgalmú rendszereken dolgoztam. Az infrastruktúra, a skálázás és az egymásra épülő technológiai függőségek mellett egyre többet számított, hogyan dolgoznak együtt a fejlesztők.
-
-## A technológia önmagában már nem volt elég
-
-Fejlesztőcsapatok vezetése közben fontosabbá váltak a döntéshozatal, a felelősségi körök és az együttműködés kérdései. Egy lassú fejlesztési folyamat mögött néha a döntési jogkörök elosztása áll. Egy nehezen kezelhető digitális szolgáltatás pedig gyakran megmutatja, hogyan oszlik meg a munka azok között, akik működtetik.
-
-## Ma
-
-A nagyvállalati fejlesztési működés, a technológiai modernizáció, a mesterséges intelligencia és a szervezeti változás foglalkoztat.
-
-## Ami mindvégig közös maradt
-
-A kíváncsiság. Érteni akarom, miért működnek rosszul bizonyos rendszerek, és hogyan lehet rajtuk érdemben változtatni. A [Szemléletem](/szemleletem) oldalon leírom, hogyan közelítek egy problémához.
+Fejlesztőcsapatok vezetése közben egyre fontosabbá vált a döntéshozatal, a felelősségi körök és az együttműködés. Egy lassú fejlesztési folyamat mögött néha a döntési jogkörök elosztása áll. Ma a nagyvállalati fejlesztési működés, a technológiai modernizáció, a mesterséges intelligencia és a szervezeti változás foglalkoztat.
 
 ## Miért problemas.hu?
 
-Azok a problémák érdekelnek a leginkább, amelyek annyira hétköznapivá váltak, hogy ritkán kérdezzük meg, miért működnek így. Itt gyűjtöm az ezekről szóló [írásaimat és elemzéseimet](/#gondolatok).
+Azok a problémák érdekelnek a leginkább, amelyek annyira hétköznapivá váltak, hogy ritkán kérdezzük meg, miért működnek így. Itt gyűjtöm az ezekről szóló [írásaimat és elemzéseimet](/#gondolatok). Azt, hogy hogyan közelítek hozzájuk, a [Szemléletem](/szemleletem) oldalon írom le.

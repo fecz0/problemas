@@ -8,55 +8,31 @@ home:
     claim: A problémák érdekelnek. Főleg azok, amiket már mindenki megszokott.
     description: Technológiai vezetőként rendszereket, termékeket és csapatokat építek. Az érdekel, hogy miért működnek a dolgok úgy, ahogy, és hogyan lehet rajtuk érdemben változtatni.
     aboutLabel: Ismerj meg
-    outlookLabel: Ahogy gondolkodom
   outlook:
     label: Szemlélet
     heading: A rosszul működő rendszer nem természeti törvény.
     paragraphs:
-      - Egy rossz folyamatot nem feltétlenül egy újabb szoftver javít meg. A nagyobb csapat nem mindig jelent gyorsabb szállítást. Az automatizáció pedig nem helyettesíti a jó döntéseket.
-      - Először azt érdemes megérteni, hogy mi tartja fenn a problémát. Csak utána érdemes megoldást keresni.
+      - Mielőtt megoldást keresek, azt próbálom megérteni, mi tartja fenn a problémát. Egy újabb szoftver vagy egy nagyobb csapat ezt önmagában ritkán oldja meg.
     linkLabel: Szemléletem
   topics:
     heading: Amivel foglalkozom
     items:
       - title: Technológia
-        description: Hogyan lehet olyan digitális rendszereket építeni, amelyek hosszú távon is működtethetők, fejleszthetők és érthetők maradnak?
-        themes:
-          - Szoftverfejlesztés
-          - Architektúra
-          - Felhő
-          - Megfigyelhetőség
+        description: Hogyan maradnak a digitális rendszerek hosszú távon is érthetők és fejleszthetők?
       - title: Emberek és szervezetek
-        description: Miért akad el a munka akkor is, amikor egy szervezetben mindenki hozzáértő és jó szándékú?
-        themes:
-          - Engineering leadership
-          - Döntéshozatal
-          - Felelősségi körök
-          - Mérhető szállítás
+        description: Miért akad el a munka akkor is, amikor mindenki hozzáértő és jó szándékú?
       - title: AI és automatizáció
-        description: Hogyan lesz a mesterséges intelligenciából valódi szervezeti képesség, nem csupán egy újabb megvásárolt eszköz?
-        themes:
-          - Agentic AI
-          - AI-támogatott fejlesztés
-          - Tudásautomatizáció
-          - AI governance
+        description: Hogyan lesz a mesterséges intelligenciából valódi szervezeti képesség?
       - title: Közös rendszereink
-        description: Miért fogadunk el évtizedek óta olyan működési problémákat, amelyek technológiai vagy szervezeti változtatásokkal javíthatók lennének?
-        themes:
-          - Közszolgáltatások
-          - Energetika
-          - Állami digitalizáció
-          - Digitális önrendelkezés
+        description: Miért fogadunk el évtizedek óta olyan működési hibákat, amelyeken lehetne javítani?
   experience:
     label: Tapasztalat
     heading: A fejlesztéstől a rendszerek alakításáig.
     paragraphs:
-      - Szoftverfejlesztőként kezdtem, aztán fokozatosan egyre nagyobb technológiai és szervezeti problémákkal foglalkoztam.
-      - Dolgoztam nemzetközi digitális termékeken, nagy forgalmú rendszerek skálázásán, fejlesztőcsapatok vezetésén és technológiai modernizáción. Ma az érdekel leginkább, hogyan lehet a technológiai, szervezeti és emberi tényezőket együtt kezelni.
+      - Dolgoztam nemzetközi digitális termékeken, nagy forgalmú rendszerek skálázásán és technológiai modernizáción, és vezettem fejlesztőcsapatokat.
     linkLabel: A hosszabb történet
   thoughts:
     heading: Írások
-    description: Elemzések és cikkek technológiáról, szervezetekről és közös rendszereinkről. A cikkeim elsősorban a Substacken jelennek meg.
     publications:
       - title: A visszafordíthatatlan döntések csapdája
         description: Mi történik, ha egy döntés következményei hamarabb rögzülnek, mint hogy kiderülne, működik-e? Az iskolakezdési támogatás példáján a mérés, a visszacsatolás és a változtatás mozgásterét keresem.

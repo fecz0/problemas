@@ -51,7 +51,7 @@
 }
 
 .editorial-hero {
-  padding-block: clamp(2.5rem, 7vw, 6rem);
+  padding-block: clamp(2.5rem, 6vw, 4.5rem);
 }
 
 /* The name is the strongest element of the page */
@@ -176,7 +176,7 @@
 .editorial-section {
   display: grid;
   gap: 1.25rem 2rem;
-  padding-block: clamp(2.5rem, 7vw, 5rem);
+  padding-block: clamp(2rem, 5vw, 3.5rem);
   border-top: 1px solid var(--editorial-line);
   scroll-margin-top: 5rem;
 }
@@ -198,18 +198,12 @@
   text-wrap: balance;
 }
 
-.editorial-wide {
-  grid-column: 1 / -1;
-  margin-block: 1.5rem;
-}
-
 /* A comfortable measure for long reading */
 .editorial-page {
   max-width: 48rem;
   margin-inline: auto;
 }
 
-.editorial-page .cycle,
 .editorial-page .editorial-facts {
   margin-block: 2rem 2.5rem;
 }
@@ -219,7 +213,7 @@
   display: grid;
   grid-template-columns: 2.5rem minmax(0, 1fr);
   gap: .5rem 1rem;
-  padding-block: 1.75rem;
+  padding-block: 1.25rem;
   border-bottom: 1px solid var(--editorial-line);
 }
 
@@ -227,7 +221,7 @@
   padding-top: 0;
 }
 
-.editorial-topics li > div {
+.editorial-topics li > p {
   grid-column: 2;
 }
 
@@ -246,7 +240,6 @@
   letter-spacing: -.025em;
 }
 
-.editorial-topics .editorial-label,
 .editorial-publications p {
   margin-top: .5rem;
 }
@@ -273,10 +266,28 @@
   border-bottom: 1px solid var(--editorial-line);
 }
 
+/* Beside a section label the first row starts level with it */
+.editorial-section > .editorial-publications li:first-child {
+  padding-top: 0;
+}
+
 .editorial-publications h3 {
   font-size: 1.2rem;
   font-weight: 700;
   line-height: 1.35;
+}
+
+/* Titles read as text and pick up the accent when pointed at or focused */
+.editorial-publications .editorial-link {
+  color: var(--ui-text-highlighted);
+  text-decoration-color: var(--editorial-muted);
+  text-decoration-thickness: 1px;
+}
+
+.editorial-publications .editorial-link:hover,
+.editorial-publications .editorial-link:focus-visible {
+  color: var(--editorial-accent);
+  text-decoration-color: currentcolor;
 }
 
 .editorial-contacts {
@@ -332,10 +343,6 @@
   .editorial-section {
     grid-template-columns: minmax(9rem, 1fr) 3fr;
   }
-
-  .editorial-aside {
-    grid-column: 2;
-  }
 }
 
 @media (min-width: 64rem) {
@@ -343,7 +350,7 @@
     grid-template-columns: 2.5rem minmax(0, 2fr) minmax(0, 3fr);
   }
 
-  .editorial-topics li > div {
+  .editorial-topics li > p {
     grid-column: 3;
   }
 

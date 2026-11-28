@@ -63,14 +63,21 @@ test.describe('Home Page', () => {
     }
   })
 
-  test('explains the problem-solving cycle as an ordered list', async ({ page }) => {
-    for (const path of ['/', '/szemleletem/']) {
-      await page.goto(path)
+  test('keeps publication titles quiet until pointed at or focused', async ({ page }) => {
+    await page.emulateMedia({ colorScheme: 'dark' })
+    await page.goto('/')
+    const title = page.getByRole('region', { name: 'Írások' }).getByRole('link').first()
 
-      const steps = page.getByRole('list', { name: 'Problémamegoldási ciklus' }).getByRole('heading')
-      await expect(steps).toHaveText(['Megérteni', 'Egyszerűsíteni', 'Kipróbálni', 'Mérni', 'Javítani'])
-      await expect(page.getByText('Az ötödik lépés után újra az első következik.')).toBeAttached()
-    }
+    await expect(title).toHaveCSS('color', 'rgb(242, 240, 233)')
+    await expect(title).toHaveCSS('text-decoration-line', 'underline')
+    await title.hover()
+    await expect(title).toHaveCSS('color', 'rgb(226, 243, 107)')
+    await page.mouse.move(0, 0)
+    await expect(title).toHaveCSS('color', 'rgb(242, 240, 233)')
+    await title.focus()
+    await page.keyboard.press('Shift+Tab')
+    await page.keyboard.press('Tab')
+    await expect(title).toHaveCSS('color', 'rgb(226, 243, 107)')
   })
 
   test('states the experience without naming employers on both pages', async ({ page }) => {
@@ -79,6 +86,8 @@ test.describe('Home Page', () => {
 
       await expect(page.getByRole('main').getByRole('definition')).toHaveCount(3)
       await expect(page.getByRole('main').getByRole('definition').first()).toContainText('Head of Development')
+      // Credibility comes from roles and industry, not company headcounts
+      await expect(page.getByRole('main')).not.toContainText(/\d\s*fő/)
     }
   })
 })
@@ -201,9 +210,13 @@ test.describe('English Profile', () => {
 
     const articles = main.locator('a[href^="https://fecz0.substack.com/p/"]')
     await expect(articles).toHaveCount(3)
-    for (const article of await articles.all()) await expect(article).toHaveAttribute('hreflang', 'hu')
+    for (const article of await articles.all()) {
+      await expect(article).toHaveAttribute('hreflang', 'hu')
+      await expect(article).toHaveAccessibleName(/external site/)
+    }
+    await expect(main.locator('time').first()).toHaveText('11 June 2026')
     for (const name of ['LinkedIn', 'Substack', 'Bluesky', 'GitHub']) {
-      await expect(main.getByRole('list').getByRole('link', { name })).toBeVisible()
+      await expect(main.getByRole('region', { name: 'Get in touch' }).getByRole('link', { name })).toBeVisible()
     }
   })
 })
@@ -339,9 +352,5 @@ test.describe('Dark Mode', () => {
     await expect(page.locator('body')).toHaveCSS('background-color', 'rgb(17, 20, 25)')
     await expect(page.getByRole('heading', { level: 1 })).toBeVisible()
     expect(await page.locator('body').evaluate(body => body.scrollWidth)).toBeLessThanOrEqual(375)
-
-    await page.getByRole('link', { name: 'Ahogy gondolkodom' }).click()
-    await expect(page).toHaveURL(/#szemlelet$/)
-    await expect(page.getByRole('heading', { name: 'A rosszul működő rendszer nem természeti törvény.' })).toBeInViewport()
   })
 })

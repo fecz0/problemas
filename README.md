@@ -33,7 +33,7 @@ Pages are Markdown files in `content/`:
 - `rolam.md`, `szemleletem.md`: standalone pages
 - `en.md`: the English profile at `/en/`
 - `problemak/`: on-site analyses, listed on the home page together with the publications, newest first
-- `data/`: the problem-solving cycle and the experience facts, used on several pages
+- `data/`: the experience facts, used on several pages
 
 The available frontmatter fields are defined in `content.config.ts`.
 
